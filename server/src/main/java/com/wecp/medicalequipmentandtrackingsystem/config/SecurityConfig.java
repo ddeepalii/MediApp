@@ -47,11 +47,11 @@ public class SecurityConfig {
             .antMatchers(HttpMethod.GET,"/api/hospital/equipment").hasAuthority("HOSPITAL")
             .antMatchers(HttpMethod.GET,"/api/hospital/equipment/**").hasAuthority("HOSPITAL")
             .antMatchers(HttpMethod.GET,"/api/hospitals").hasAuthority("HOSPITAL")
-            .antMatchers(HttpMethod.GET,"/api/technician/maintenance").hasAnyAuthority("TECHNICIAN")
+            .antMatchers(HttpMethod.GET,"/api/technician/maintenance").hasAnyAuthority("TECHNICIAN","HOSPITAL")
             
             // .antMatchers(HttpMethod.GET,"/api/technician/maintenance").hasAuthority("TECHNICIAN")
             .antMatchers(HttpMethod.PUT,"/api/technician/maintenance/update/**").hasAuthority("TECHNICIAN")
-            .antMatchers(HttpMethod.GET,"/api/supplier/orders").hasAnyAuthority("SUPPLIER")
+            .antMatchers(HttpMethod.GET,"/api/supplier/orders").hasAnyAuthority("SUPPLIER","HOSPITAL")
             .antMatchers(HttpMethod.PUT,"/api/supplier/order/update/**").hasAuthority("SUPPLIER")
                 .antMatchers("/api/**").authenticated()
             .and()
