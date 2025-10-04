@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +21,8 @@ import { RequestequipmentComponent } from './requestequipment/requestequipment.c
 import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { OrdersComponent } from './orders/orders.component';
 import { HomepageComponent } from './homepage/homepage.component';
+
+
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { HomepageComponent } from './homepage/homepage.component';
     ReactiveFormsModule,
     HttpClientModule 
   ],
-  providers: [HttpService,HttpClientModule ],
+  providers:  [HttpService,HttpClientModule ], 
+              
   bootstrap: [AppComponent]
 })
 export class AppModule { }
