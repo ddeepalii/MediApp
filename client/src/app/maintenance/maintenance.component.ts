@@ -11,6 +11,9 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./maintenance.component.scss']
 })
 export class MaintenanceComponent implements OnInit {
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
   //todo: complete missing code...
 }
 
