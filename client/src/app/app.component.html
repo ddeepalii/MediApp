@@ -18,18 +18,19 @@
         <a
           class="nav-link"
           *ngIf="roleName === 'HOSPITAL'"
-          [routerLink]="['/schedule-maintenance']"
-          >Schedule Maintenance</a
+          [routerLink]="['/requestequipment']"
+          >Request Equipment</a
         >
       </li>
       <li class="nav-item">
         <a
           class="nav-link"
           *ngIf="roleName === 'HOSPITAL'"
-          [routerLink]="['/requestequipment']"
-          >Request Equipment</a
+          [routerLink]="['/schedule-maintenance']"
+          >Schedule Maintenance</a
         >
       </li>
+      
       <li class="nav-item">
         <a
           class="nav-link"

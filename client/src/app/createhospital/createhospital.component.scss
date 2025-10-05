@@ -1,54 +1,117 @@
-button {
-    border: none;
-    color: #fff;
-    background-image: linear-gradient(30deg, #5655b6, #4ce3f7);
-    border-radius: 20px;
-    background-size: 100% auto;
-    font-family: inherit;
-    font-size: 17px;
-    padding: 0.6em 1.5em;
+/* General Layout */
+body {
+  background: linear-gradient(135deg, #e8f0ff, #d1e3ff);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Headings */
+h2 {
+  color: #003366;
+}
+
+/* Cards */
+.card {
+  border: none;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+  background-color: #004080;
+  color: white;
+  font-weight: 600;
+  font-size: 1.05rem;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* Inputs */
+.form-control {
+  border: 1px solid #c0c0c0;
+  border-radius: 6px;
+  transition: 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #004080;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #003366;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+}
+
+.btn-sm {
+  padding: 0.35rem 0.65rem;
+  font-size: 0.875rem;
+}
+
+/* Tables */
+.table {
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.table th {
+  background-color: #004080;
+  color: #fff;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+/* Alerts */
+.alert {
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+/* Modal */
+.modal-content {
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  background-color: #004080;
+  color: white;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.modal-title {
+  font-weight: 600;
+}
+
+.modal-footer {
+  justify-content: flex-end;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal-dialog {
+    max-width: 90%;
   }
-  
-  button:hover {
-    background-position: right center;
-    background-size: 200% auto;
-    -webkit-animation: pulse 2s infinite;
-    animation: pulse512 1.5s infinite;
+
+  .table-responsive {
+    overflow-x: auto;
   }
-  h2 {
-    padding: 10px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+  .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
   }
-  #headerr {
-    color: teal;
-  }
-  .card-header fw-bold {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    background-color: rgba(60, 176, 225, 0.915);
-  }
-  @keyframes pulse512 {
-    0% {
-      box-shadow: 0 0 0 0 #05bada66;
-    }
-  
-    70% {
-      box-shadow: 0 0 0 10px rgb(218 103 68 / 0%);
-    }
-  
-    100% {
-      box-shadow: 0 0 0 0 rgb(218 103 68 / 0%);
-    }
-  }
-  
-  .input-group {
-    width: auto 0;
-  }
-  #errorSeach {
-    background-color: white;
-    color: red;
-    font-weight: 500;
-  }
-  #s,
-  #c {
-    border-radius: 10px;
-  }
+}
