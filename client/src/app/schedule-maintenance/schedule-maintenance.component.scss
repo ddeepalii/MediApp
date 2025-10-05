@@ -1,0 +1,158 @@
+body {
+    background: radial-gradient(circle at top left, #94abc0, #004080);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    padding-bottom: 2rem;
+  }
+  
+
+  /* Headers & Layout     */
+  h2 {
+    color: #004080;
+    font-weight: 600;
+  }
+  
+  .text-center {
+    text-align: center !important;
+  }
+  
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+
+  /* Card Design          */
+  .card {
+    background: rgba(255, 255, 255, 0.96);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+  }
+  
+  .card-header {
+    background-color: #007bff;
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+  
+  .card-body {
+    padding: 2rem;
+  }
+
+  /* Form Styling         */
+  .form-label {
+    font-weight: 500;
+    color: #003366;
+  }
+  
+  .form-control {
+    border: 1.5px solid #c4d8f7;
+    border-radius: 6px;
+    padding: 0.45rem 0.75rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+  
+
+  /* Buttons              */
+  .btn-outline-dark {
+    border: 2px solid #004080;
+    color: #004080;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-outline-dark:hover {
+    background-color: #004080;
+    color: white;
+  }
+  
+
+  /* Alerts & Validation  */
+  .text-danger {
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+  }
+  
+  .alert {
+    border-radius: 6px;
+    font-weight: 500;
+  }
+  
+
+  /* Table Styling        */
+  .table {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+  
+  .table th {
+    background-color: #004080;
+    color: white;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+  
+  .table td {
+    vertical-align: middle;
+  }
+  
+
+  /* Status Styling       */
+  td[ngStyle] {
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0.5rem;
+    border-radius: 6px;
+  }
+  
+  td[ngStyle*='Delivered'],
+  td[ngStyle*='Complete'] {
+    color: #155724;
+    background-color: #d4edda;
+  }
+  
+  td[ngStyle*='In Transit'] {
+    color: #856404;
+    background-color: #fff3cd;
+  }
+  
+  td[ngStyle*='Initiated'] {
+    color: #0c5460;
+    background-color: #d1ecf1;
+  }
+  
+  /* -------------------- */
+  /* Responsive Layout    */
+  /* -------------------- */
+  @media (max-width: 768px) {
+    h2 {
+      font-size: 1.5rem;
+      text-align: center;
+    }
+  
+    .card-body {
+      padding: 1.25rem;
+    }
+  
+    .btn {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+  
+    .table-responsive {
+      overflow-x: auto;
+    }
+  }
+  
