@@ -1,106 +1,85 @@
-<html>
-<div class="row text-center">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MediSphere - Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="dashboard.component.css" />
+</head>
+
+<body class="bg-light">
+  <div class="container py-5">
+    <h1 class="text-center text-primary mb-4">Welcome {{username}} ({{ roleType }})</h1>
+
+    <!-- HOSPITAL DASHBOARD -->
     <div *ngIf="roleType == 'HOSPITAL'">
-
-        <body>
-            <h1>Welcome {{username}}(Admin)</h1>
-            <div class="container">
-                <div class="parent">
-                    <div class="card">
-                        <div class="content-box">
-                            <h1 class="card-title">Create New Hospital</h1>
-                            <p class="card-content">
-                                Let's build a better world together. Let's add a new hospital
-                            </p>
-                            <a class="see-more" routerLink="/createhospital">See More</a>
-                        </div>
-                        <div class="date-box">
-                            <span class="month">Medi</span>
-                            <span class="date">Service</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="parent card2">
-                    <div class="card">
-                        <div class="content-box">
-                            <h1 class="card-title">Request Equipment</h1>
-                            <p class="card-content">
-                                Buckle Up! We are growing so lets get some new equipments!
-                            </p>
-                            <a class="see-more" routerLink="/requestequipment">See More</a>
-                        </div>
-                        <div class="date-box">
-                            <span class="month">Medi</span>
-                            <span class="date">Service</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="parent card3">
-                    <div class="card">
-                        <div class="content-box">
-                            <h1 class="card-title">Schedule Maintenance</h1>
-                            <p class="card-content">
-                                Fix the Disfunctioning Equipment by Scheduling its Maintenace
-                            </p>
-                            <a class="see-more" routerLink="/schedule-maintenance">See More</a>
-                        </div>
-                        <div class="date-box">
-                            <span class="month">Medi</span>
-                            <span class="date">Service</span>
-                        </div>
-                    </div>
-                </div>
+      <div class="row g-4 justify-content-center">
+        <!-- Create New Hospital -->
+        <div class="col-md-4">
+          <div class="custom-card h-100">
+            <div class="card-body">
+              <h5 class="card-title">Create New Hospital</h5>
+              <p class="card-text">Let's build a better world together. Let's add a new hospital.</p>
+              <a routerLink="/createhospital" class="btn btn-primary w-100">See More</a>
             </div>
-        </body>
-    </div>
-
-    <div *ngIf="roleType == 'SUPPLIER'">
-
-        <body>
-            <h1>Welcome {{username}}(SUPPLIER)</h1>
-            <div class="container">
-                <div class="parent card2">
-                    <div class="card">
-                        <div class="content-box">
-                            <h1 class="card-title">Order Report</h1>
-                            <p class="card-content">Generate Order Report</p>
-                            <a class="see-more" routerLink="/orders">See More</a>
-                        </div>
-                        <div class="date-box">
-                            <span class="month">Medi</span>
-                            <span class="date">Service</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </body>
-    </div>
-</div>
-
-
-<!-- if the role is technician -->
-<div *ngIf="roleType == 'TECHNICIAN'">
-
-    <body style="background-color: black">
-        <h1>Welcome {{username}}(TECHNICIAN)</h1>
-        <div class="container">
-            <div class="parent card2">
-                <div class="card">
-                    <div class="content-box">
-                        <h1 class="card-title">Maintenance Report</h1>
-                        <p class="card-content">Generate Maintenance Report</p>
-                        <a class="see-more" routerLink="/maintenance">See More</a>
-                    </div>
-                    <div class="date-box">
-                        <span class="month">Medi</span>
-                        <span class="date">Service</span>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    </body>
-</div>
 
+        <!-- Request Equipment -->
+        <div class="col-md-4">
+          <div class="custom-card h-100">
+            <div class="card-body">
+              <h5 class="card-title">Request Equipment</h5>
+              <p class="card-text">Buckle Up! We are growing so let's get some new equipment!</p>
+              <a routerLink="/requestequipment" class="btn btn-primary w-100">See More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Schedule Maintenance -->
+        <div class="col-md-4">
+          <div class="custom-card h-100">
+            <div class="card-body">
+              <h5 class="card-title">Schedule Maintenance</h5>
+              <p class="card-text">Fix the dysfunctional equipment by scheduling its maintenance.</p>
+              <a routerLink="/schedule-maintenance" class="btn btn-primary w-100">See More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUPPLIER DASHBOARD -->
+    <div *ngIf="roleType == 'SUPPLIER'">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <div class="custom-card h-100">
+            <div class="card-body">
+              <h5 class="card-title">Order Report</h5>
+              <p class="card-text">Generate and manage order reports efficiently.</p>
+              <a routerLink="/orders" class="btn btn-primary w-100">See More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TECHNICIAN DASHBOARD -->
+    <div *ngIf="roleType == 'TECHNICIAN'">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <div class="custom-card h-100">
+            <div class="card-body">
+              <h5 class="card-title">Maintenance Report</h5>
+              <p class="card-text">Generate detailed maintenance reports for equipment.</p>
+              <a routerLink="/maintenance" class="btn btn-primary w-100">See More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
 </html>

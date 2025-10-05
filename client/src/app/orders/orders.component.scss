@@ -1,0 +1,128 @@
+/* Root background and layout */
+body {
+    background: radial-gradient(circle at top left, #94abc0, #004080);
+    min-height: 100vh;
+    padding-bottom: 3rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Title section */
+  h2 {
+    font-weight: 600;
+    color: #004080;
+  }
+  
+  /* Card style */
+  .card {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  
+  .card-header {
+    background-color: #007bff;
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  
+  .card-body {
+    padding: 1.5rem;
+  }
+  
+  /* Table styles */
+  .table {
+    margin-top: 1rem;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .table th {
+    background-color: #004080;
+    color: white;
+    vertical-align: middle;
+  }
+  
+  .table td {
+    vertical-align: middle;
+  }
+  
+  /* Status badge styles */
+  td[ngStyle] {
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0.5rem;
+    border-radius: 6px;
+  }
+  
+  /* Status styling logic */
+  td[ngStyle*='In Transit'] {
+    color: #856404;
+    background-color: #fff3cd;
+  }
+  
+  td[ngStyle*='Delivered'] {
+    color: #155724;
+    background-color: #d4edda;
+  }
+  
+  td[ngStyle*='Pending'] {
+    color: #721c24;
+    background-color: #f8d7da;
+  }
+  
+  /* Button */
+  .btn-warning {
+    font-weight: 600;
+  }
+  
+  /* Modal styling */
+  .modal-content {
+    border-radius: 12px;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal-header {
+    background-color: #004080;
+    color: white;
+    border-bottom: none;
+  }
+  
+  .modal-body select {
+    border-radius: 8px;
+    border: 1.5px solid #c4d8f7;
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  .modal-footer {
+    border-top: none;
+  }
+  
+  /* Alert messages */
+  .alert {
+    border-radius: 8px;
+    font-weight: 500;
+  }
+  
+  /* Responsive improvements */
+  @media (max-width: 768px) {
+    h2 {
+      font-size: 1.5rem;
+      text-align: center;
+    }
+  
+    .table-responsive {
+      overflow-x: auto;
+    }
+  
+    .btn {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+  }
+  
