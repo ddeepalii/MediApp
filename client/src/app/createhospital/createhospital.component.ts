@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -11,7 +12,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './createhospital.component.html',
   styleUrls: ['./createhospital.component.scss'],
 })
-export class CreatehospitalComponent implements OnInit {
+export class CreatehospitalComponent implements OnInit, OnDestroy {
   private formSubscription: Subscription;
   itemForm: FormGroup;
   equipmentForm: FormGroup;
@@ -20,16 +21,17 @@ export class CreatehospitalComponent implements OnInit {
   errorMessage: any;
   hospitalList: any = [];
   assignModel: any = {};
-  filteredHospitalList: any = []; // Newly added property to store filtered hospitals
+  filteredHospitalList: any = [];
   modalSearchQuery: any;
   showMessage: any;
   responseMessage: any;
-  showHospitalfilterData: boolean = false; //FOR SHOWING THE FILTERED DATA
-  showHospitalData: boolean = true; //TO SHOW ALL THE HOSPITALS
+  showHospitalfilterData: boolean = false;
+  showHospitalData: boolean = true;
   isClick: boolean = true;
   search: Hospital[] = [];
   NotFoundMessage: string = '';
   FoundMessage: string = '';
+  editingHospitalId: number | null = null;
 
   constructor(
     public router: Router,
@@ -51,13 +53,18 @@ export class CreatehospitalComponent implements OnInit {
       description: [this.formModel.description, [Validators.required]],
       hospitalId: [this.formModel.hospitalId, [Validators.required]],
     });
+
     this.formSubscription = this.itemForm.valueChanges.subscribe(() => {
-      this.clearMessages(); // Call method to clear messages
+      this.clearMessages();
     });
   }
 
   ngOnInit(): void {
     this.getHospital();
+  }
+
+  ngOnDestroy(): void {
+    this.formSubscription.unsubscribe();
   }
 
   getHospital() {
@@ -68,166 +75,124 @@ export class CreatehospitalComponent implements OnInit {
       },
       (error) => {
         this.showError = true;
-        this.errorMessage =
-          'An error occurred while fetching hospitals. Please try again later.';
+        this.errorMessage = 'An error occurred while fetching hospitals. Please try again later.';
         console.error('Error fetching hospitals:', error);
       }
     );
   }
 
-  /*(hosp: Search) => hosp.name.toLowerCase().includes(searchTerm) */
-
-  //SEACHING HOSPITAL BY IT'S NAME
   filterHospital() {
-    this.showHospitalfilterData = true; // TO SHOW THE FILTERED HOSPITAL-LIST
-    this.showHospitalData = false; // TO DISABLE ALL THE HOSPITAL LIST
+    this.showHospitalfilterData = true;
+    this.showHospitalData = false;
 
     if (!!this.modalSearchQuery) {
-      // Double bang operator is used to check whether the value is there or not
-      const searchTerm = this.modalSearchQuery.toLowerCase().trim(); // Convert search query to lowercase and the trim it
+      const searchTerm = this.modalSearchQuery.toLowerCase().trim();
       this.filteredHospitalList = this.hospitalList.filter(
         (hosp: Hospital) =>
           hosp.name.toLowerCase().trim() === searchTerm ||
           hosp.location.toLowerCase().trim() === searchTerm ||
           hosp.id == searchTerm
       );
-      console.log(this.filteredHospitalList);
       if (this.filteredHospitalList.length == 0) {
         this.isClick = false;
         this.NotFoundMessage = 'No Hospital(s) Found!!';
         this.showHospitalData = true;
       } else {
         this.isClick = true;
-        this.FoundMessage=this.filteredHospitalList.length+" record(s) found!!"
+        this.FoundMessage = this.filteredHospitalList.length + ' record(s) found!!';
       }
     } else {
-      this.isClick = false; // IF THE SEARCH FIELD DOES NOT HAVE ANY VALUE
-      //this.filteredHospitalList = null;
+      this.isClick = false;
       this.NotFoundMessage = 'Nothing to search';
       this.showHospitalData = true;
     }
   }
 
-
-
-
-  
-
-  //CLOSING THE LIST OF FILTERED SEARCHED HOSPITAL-lIST-->(to search)
   closeIt() {
     this.showHospitalfilterData = false;
     this.showHospitalData = true;
     this.modalSearchQuery = '';
   }
 
-
-
-
-  //----------------------------------------------------------------------------------------------
-
-
-
-
-
   clearMessages() {
     this.showMessage = false;
     this.showError = false;
   }
 
-
-  
-  
-  
-  //---------------------------------------------------------------------------------------------
-
-
-
-
-
-  ngOnDestroy(): void {
-    // Unsubscribe from form value changes to avoid memory leaks
-    this.formSubscription.unsubscribe();
-  }
-
-
-  
-  
-  
-  //------------------------------------------------------------------------------------------------------
-
-  
-  
-  
-  
   onSubmit() {
     if (this.itemForm.valid) {
-      const newHospitalName = this.itemForm.value.name.toLowerCase().trim();
-      const newHospitalLocation = this.itemForm.value.location
-        .toLowerCase()
-        .trim();
+      const hospitalData = this.itemForm.value;
 
-      // Check if the new hospital name or location already exists
-      const isDuplicate = this.hospitalList.some((hospital: Hospital) => {
-        return (
-          hospital.name.toLowerCase().trim() === newHospitalName &&
-          hospital.location.toLowerCase().trim() === newHospitalLocation
-        );
-      });
-
-      if (isDuplicate) {
-        // Show error message for duplicate hospital
-        this.showError = true;
-        this.errorMessage = 'This hospital already exists.';
-        this.showMessage = false;
-      } else {
-        // If not a duplicate, proceed to add the hospital
-        this.httpService.createHospital(this.itemForm.value).subscribe(
-          (data: any) => {
+      if (this.editingHospitalId) {
+        this.httpService.updateHospital(this.editingHospitalId, hospitalData).subscribe(
+          () => {
+            this.responseMessage = 'Hospital updated successfully.';
+            this.showMessage = true;
+            this.editingHospitalId = null;
             this.itemForm.reset();
             this.getHospital();
-            this.showMessage = true;
-            this.responseMessage = `Hospital added successfully`;
-            this.showError = false;
           },
           (error) => {
             this.showError = true;
-            this.errorMessage =
-              'An error occurred while creating hospital. Please try again later.';
-            console.error('Error creating hospital:', error);
+            this.errorMessage = 'Error updating hospital.';
+            console.error('Error updating hospital:', error);
           }
         );
+      } else {
+        const newHospitalName = hospitalData.name.toLowerCase().trim();
+        const newHospitalLocation = hospitalData.location.toLowerCase().trim();
+
+        const isDuplicate = this.hospitalList.some((hospital: Hospital) => {
+          return (
+            hospital.name.toLowerCase().trim() === newHospitalName &&
+            hospital.location.toLowerCase().trim() === newHospitalLocation
+          );
+        });
+
+        if (isDuplicate) {
+          this.showError = true;
+          this.errorMessage = 'This hospital already exists.';
+          this.showMessage = false;
+        } else {
+          this.httpService.createHospital(hospitalData).subscribe(
+            () => {
+              this.itemForm.reset();
+              this.getHospital();
+              this.showMessage = true;
+              this.responseMessage = 'Hospital added successfully';
+              this.showError = false;
+            },
+            (error) => {
+              this.showError = true;
+              this.errorMessage = 'An error occurred while creating hospital. Please try again later.';
+              console.error('Error creating hospital:', error);
+            }
+          );
+        }
       }
     } else {
       this.itemForm.markAllAsTouched();
     }
   }
 
-  /*---------------------------------------------------------------------------------------------------------------------------------*/
-
   Addequipment(value: any) {
     this.equipmentForm.controls['hospitalId'].setValue(value.id);
     this.showMessage = false;
   }
 
-  /*---------------------------------------------------------------------------------------------------------------------------------*/
-
   submitEquipment() {
     if (this.equipmentForm.valid) {
       this.httpService
-        .addEquipment(
-          this.equipmentForm.value,
-          this.equipmentForm.controls['hospitalId'].value
-        )
+        .addEquipment(this.equipmentForm.value, this.equipmentForm.controls['hospitalId'].value)
         .subscribe(
-          (data: any) => {
+          () => {
             this.showMessage = true;
-            this.responseMessage = `Equipment added successfully`;
+            this.responseMessage = 'Equipment added successfully';
             this.equipmentForm.reset();
           },
           (error) => {
             this.showError = true;
-            this.errorMessage =
-              'An error occurred while adding equipment. Please try again later.';
+            this.errorMessage = 'An error occurred while adding equipment. Please try again later.';
             console.error('Error adding equipment:', error);
           }
         );
@@ -236,12 +201,27 @@ export class CreatehospitalComponent implements OnInit {
     }
   }
 
-  editHospital():void{
-
+  editHospital(hospital: Hospital): void {
+    this.itemForm.patchValue({
+      name: hospital.name,
+      location: hospital.location
+    });
+    this.editingHospitalId = hospital.id;
+    this.clearMessages();
   }
 
-
-  deleteHospital():void{
-
+  deleteHospital(id: number): void {
+    this.httpService.deleteHospital(id).subscribe(
+      () => {
+        this.getHospital();
+        this.responseMessage = 'Hospital deleted successfully.';
+        this.showMessage = true;
+      },
+      (error) => {
+        this.errorMessage = 'Error deleting hospital.';
+        this.showError = true;
+        console.error('Error deleting hospital:', error);
+      }
+    );
   }
 }
