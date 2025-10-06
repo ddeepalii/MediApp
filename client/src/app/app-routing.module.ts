@@ -14,6 +14,9 @@ import { RequestequipmentComponent } from './requestequipment/requestequipment.c
 import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { OrdersComponent } from './orders/orders.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import { AboutComponent } from './pages/about/about.component';
+import { ContactComponent } from './pages/contact/contact.component';
+import { PrivacyComponent } from './pages/privacy/privacy.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, data: { title: 'MediSphere-Login' } },
@@ -24,7 +27,10 @@ const routes: Routes = [
   { path: 'requestequipment', component: RequestequipmentComponent , data: { title: 'MediSphere-Request-Equipment' } },  
   { path: 'maintenance', component: MaintenanceComponent , data: { title: 'MediSphere-Maintenance' } },  
   { path: 'orders', component: OrdersComponent , data: { title: 'MediSphere-Orders' }},  
-  { path: 'homepage', component: HomepageComponent ,data: { title: 'MediSphere-HomePage' }},  
+  { path: 'homepage', component: HomepageComponent ,data: { title: 'MediSphere-HomePage' }},
+  { path: 'about', component: AboutComponent },
+  { path: 'contact', component: ContactComponent},
+  { path: 'privacy', component: PrivacyComponent },  
   { path: '', redirectTo: '/homepage', pathMatch: 'full' },
 
   // { path: '**', redirectTo: '/dashboard', pathMatch: 'full' },
