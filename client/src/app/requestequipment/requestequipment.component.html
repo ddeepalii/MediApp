@@ -11,52 +11,42 @@
           <div class="col-md-6">
             <div class="form-group mb-3">
               <label for="hospitalId" class="form-label">Hospitals</label>
-              <select
-                id="hospitalId"
-                name="hospitalId"
-                formControlName="hospitalId"
-                (change)="onHospitalSelect($event)"
-                class="form-control"
-              >
+              <select id="hospitalId" name="hospitalId" formControlName="hospitalId" (change)="onHospitalSelect($event)"
+                class="form-control">
                 <option value="null">Please Choose</option>
                 <option *ngFor="let hos of hospitalList" [value]="hos.id">
                   {{ hos.name }}
                 </option>
               </select>
-              <div *ngIf="itemForm.controls['hospitalId'].invalid && (itemForm.controls['hospitalId'].dirty || itemForm.controls['hospitalId'].touched)" class="error-message">
+              <div
+                *ngIf="itemForm.controls['hospitalId'].invalid && (itemForm.controls['hospitalId'].dirty || itemForm.controls['hospitalId'].touched)"
+                class="error-message">
                 <span *ngIf="itemForm.controls['hospitalId'].errors">Please choose hospital.</span>
               </div>
             </div>
 
             <div class="form-group mb-3">
               <label for="equipmentId" class="form-label">Equipment</label>
-              <select
-                id="equipmentId"
-                name="equipmentId"
-                formControlName="equipmentId"
-                class="form-control"
-              >
+              <select id="equipmentId" name="equipmentId" formControlName="equipmentId" class="form-control">
                 <option value="null">Please Choose</option>
                 <option *ngFor="let eq of equipmentList" [value]="eq.id">
                   {{ eq.name }}
                 </option>
               </select>
-              <div *ngIf="itemForm.controls['equipmentId'].invalid && (itemForm.controls['equipmentId'].dirty || itemForm.controls['equipmentId'].touched)" class="error-message">
+              <div
+                *ngIf="itemForm.controls['equipmentId'].invalid && (itemForm.controls['equipmentId'].dirty || itemForm.controls['equipmentId'].touched)"
+                class="error-message">
                 <span *ngIf="itemForm.controls['equipmentId'].errors">Please choose Equipment.</span>
               </div>
             </div>
 
             <div class="form-group mb-3">
               <label for="orderDate" class="form-label">Order Date</label>
-              <input
-                type="date"
-                id="orderDate"
-                name="orderDate"
-                formControlName="orderDate"
-                class="form-control"
-                placeholder="Order Date"
-              />
-              <div *ngIf="itemForm.controls['orderDate'].invalid && (itemForm.controls['orderDate'].dirty || itemForm.controls['orderDate'].touched)" class="error-message">
+              <input type="date" id="orderDate" name="orderDate" formControlName="orderDate" class="form-control"
+                placeholder="Order Date" />
+              <div
+                *ngIf="itemForm.controls['orderDate'].invalid && (itemForm.controls['orderDate'].dirty || itemForm.controls['orderDate'].touched)"
+                class="error-message">
                 <span *ngIf="itemForm.controls['orderDate'].errors">Please Enter order Date.</span>
               </div>
             </div>
@@ -65,34 +55,27 @@
           <div class="col-md-6">
             <div class="form-group mb-3">
               <label for="quantity" class="form-label">Quantity</label>
-              <input
-                type="number"
-                id="quantity"
-                name="quantity"
-                formControlName="quantity"
-                class="form-control"
-                placeholder="Quantity"
-              />
-              <div *ngIf="itemForm.controls['quantity'].invalid && (itemForm.controls['quantity'].dirty || itemForm.controls['quantity'].touched)" class="error-message">
+              <input type="number" id="quantity" name="quantity" formControlName="quantity" class="form-control"
+                placeholder="Quantity" />
+              <div
+                *ngIf="itemForm.controls['quantity'].invalid && (itemForm.controls['quantity'].dirty || itemForm.controls['quantity'].touched)"
+                class="error-message">
                 <span *ngIf="itemForm.controls['quantity'].errors">Please Enter Quantity.</span>
               </div>
             </div>
 
-            <div class="form-group mb-3">
+            <!-- <div class="form-group mb-3">
               <label for="status" class="form-label">Status</label>
-              <select
-                id="status"
-                name="status"
-                formControlName="status"
-                class="form-control"
-              >
+              <select id="status" name="status" formControlName="status" class="form-control">
                 <option value="">Choose Status</option>
                 <option value="Initiated">Initiated</option>
               </select>
-              <div *ngIf="itemForm.controls['status'].invalid && (itemForm.controls['status'].dirty || itemForm.controls['status'].touched)" class="error-message">
+              <div
+                *ngIf="itemForm.controls['status'].invalid && (itemForm.controls['status'].dirty || itemForm.controls['status'].touched)"
+                class="error-message">
                 <span *ngIf="itemForm.controls['status'].errors">Please choose status.</span>
               </div>
-            </div>
+            </div> -->
           </div>
 
           <div class="col-12 mt-3 d-flex gap-3 justify-content-center">
