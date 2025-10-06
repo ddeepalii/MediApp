@@ -46,7 +46,8 @@ export class ScheduleMaintenanceComponent implements OnInit {
         [Validators.required, this.dateValidator],
       ],
       description: [this.formModel.description, [Validators.required]],
-      status: [this.formModel.status, [Validators.required]],
+      // status: [this.formModel.status, [Validators.required]],
+      status:['Initiated'],
       equipmentId: [this.formModel.equipmentId, [Validators.required]],
       hospitalId: [this.formModel.hospitalId, [Validators.required]],
     },{validators:this.dateValidator2});
@@ -96,6 +97,7 @@ export class ScheduleMaintenanceComponent implements OnInit {
       if (this.itemForm.valid) {
         alert("sucess")
         this.showError = false;
+        
 
         this.httpService
           .scheduleMaintenance(

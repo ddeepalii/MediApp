@@ -31,10 +31,10 @@ export class HttpService {
   UpdateOrderStatus(newStatus: any, orderId: any): Observable<any> {
     return this.http.put<any>(
       this.serverName +
-        '/api/supplier/order/update/' +
-        orderId +
-        '?newStatus=' +
-        newStatus,
+      '/api/supplier/order/update/' +
+      orderId +
+      '?newStatus=' +
+      newStatus,
       {},
       this.getRequestOptions()
     );
@@ -100,8 +100,8 @@ export class HttpService {
   scheduleMaintenance(details: any, equipmentId: any): Observable<any> {
     return this.http.post(
       this.serverName +
-        '/api/hospital/maintenance/schedule?equipmentId=' +
-        equipmentId,
+      '/api/hospital/maintenance/schedule?equipmentId=' +
+      equipmentId,
       details,
       this.getRequestOptions()
     );
