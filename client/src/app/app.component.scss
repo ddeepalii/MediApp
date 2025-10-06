@@ -1,92 +1,96 @@
 /* Navbar base */
 .navbar {
-    background-color: #004080 !important; /* Deep medical blue */
-    box-shadow: 0 4px 8px rgba(0, 64, 128, 0.3);
-    padding: 0.5rem 1.5rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  /* Brand style */
-  .navbar-brand {
-    font-weight: 700;
-    font-size: 1.8rem;
-    color: #a0d8ef !important; /* Soft sky blue */
-    letter-spacing: 2px;
-    transition: color 0.3s ease;
-  }
-  
-  .navbar-brand:hover,
-  .navbar-brand:focus {
-    color: #ffffff !important;
-    text-shadow: 0 0 6px #70a1ff;
-  }
-  
-  /* Navbar toggler */
-  .navbar-toggler {
-    border-color: #a0d8ef !important;
-  }
-  
-  .navbar-toggler-icon {
-    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(90deg) brightness(90%) contrast(90%);
-  }
-  
-  /* Nav links */
-  .nav-link {
-    color: #cbe9ff !important;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    transition: color 0.3s ease, background-color 0.3s ease;
-    border-radius: 6px;
-  }
-  
-  .nav-link:hover,
-  .nav-link:focus {
-    background-color: #0066cc !important;
-    color: #ffffff !important;
-    text-decoration: none;
-    box-shadow: 0 0 8px #70a1ffaa;
-  }
-  
-  /* Active nav link */
-  .nav-link.active {
-    background-color: #0080ff !important;
-    color: white !important;
-    box-shadow: 0 0 10px #70a1ff;
-  }
-  
-  /* Buttons inside nav links */
-  .nav-link.btn {
-    background-color: #007bff;
-    color: white !important;
-    padding: 6px 14px;
+  background-color: #1c1324 !important;
+  /* Deep medical blue */
+  box-shadow: 0 4px 8px rgba(0, 64, 128, 0.3);
+  padding: 0.5rem 1.5rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Brand style */
+.navbar-brand {
+  font-family: "Sigmar", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  // font-weight: 700;
+  font-size: 1.8rem;
+  color: #a0d8ef !important;
+  /* Soft sky blue */
+  letter-spacing: 2px;
+  transition: color 0.3s ease;
+}
+
+.navbar-brand:hover,
+.navbar-brand:focus {
+  color: #ffffff !important;
+  text-shadow: 0 0 6px #70a1ff;
+}
+
+/* Navbar toggler */
+.navbar-toggler {
+  border-color: #a0d8ef !important;
+}
+
+.navbar-toggler-icon {
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(90deg) brightness(90%) contrast(90%);
+}
+
+/* Nav links */
+.nav-link {
+  color: #cbe9ff !important;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  border-radius: 6px;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  background-color: #0066cc !important;
+  color: #ffffff !important;
+  text-decoration: none;
+  box-shadow: 0 0 8px #70a1ffaa;
+}
+
+/* Active nav link */
+.nav-link.active {
+  background-color: #0080ff !important;
+  color: white !important;
+  box-shadow: 0 0 10px #70a1ff;
+}
+
+/* Buttons inside nav links */
+.nav-link.btn {
+  background-color: #007bff;
+  color: white !important;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.nav-link.btn:hover {
+  background-color: #0056b3;
+  color: white !important;
+  box-shadow: 0 0 10px #70a1ff;
+}
+
+/* Separate spacing for login/register/logout buttons */
+.navbar-nav.ms-auto .nav-item {
+  margin-left: 10px;
+}
+
+/* Responsive adjustments for small screens */
+@media (max-width: 768px) {
+  .navbar-nav {
+    background-color: #003366;
     border-radius: 8px;
-    font-weight: 700;
-    transition: background-color 0.3s ease;
-    text-align: center;
+    margin-top: 10px;
+    padding: 10px 0;
   }
-  
-  .nav-link.btn:hover {
-    background-color: #0056b3;
-    color: white !important;
-    box-shadow: 0 0 10px #70a1ff;
+
+  .nav-link {
+    padding-left: 1.5rem;
   }
-  
-  /* Separate spacing for login/register/logout buttons */
-  .navbar-nav.ms-auto .nav-item {
-    margin-left: 10px;
-  }
-  
-  /* Responsive adjustments for small screens */
-  @media (max-width: 768px) {
-    .navbar-nav {
-      background-color: #003366;
-      border-radius: 8px;
-      margin-top: 10px;
-      padding: 10px 0;
-    }
-    
-    .nav-link {
-      padding-left: 1.5rem;
-    }
-  }
-  
+}
