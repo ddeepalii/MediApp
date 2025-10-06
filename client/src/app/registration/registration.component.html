@@ -64,7 +64,7 @@
                     <span>{{ hasDigit ? '✅' : '❌' }}</span> At least one digit [0-9]
                   </li>
                   <li [class.valid]="hasSpecialChar" [class.invalid]="!hasSpecialChar">
-                    <span>{{ hasSpecialChar ? '✅' : '❌' }}</span> At least one special character [@$.#!%*?&^]
+                    <span>{{ hasSpecialChar ? '✅' : '❌' }}</span> At least one special character [&#64; $. # ! % * ? & ^]
                   </li>
                   <li [class.valid]="hasMinLength" [class.invalid]="!hasMinLength">
                     <span>{{ hasMinLength ? '✅' : '❌' }}</span> Minimum 8 characters
