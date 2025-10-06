@@ -17,14 +17,14 @@ import { HomepageComponent } from './homepage/homepage.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, data: { title: 'MediSphere-Login' } },
-  { path: 'registration', component: RegistrationComponent },
-  { path: 'dashboard', component: DashbaordComponent },
-  { path: 'createhospital', component: CreatehospitalComponent },  
-  { path: 'schedule-maintenance', component: ScheduleMaintenanceComponent },  
-  { path: 'requestequipment', component: RequestequipmentComponent },  
-  { path: 'maintenance', component: MaintenanceComponent },  
-  { path: 'orders', component: OrdersComponent },  
-  { path: 'homepage', component: HomepageComponent },  
+  { path: 'registration', component: RegistrationComponent , data: { title: 'MediSphere-Register' } },
+  { path: 'dashboard', component: DashbaordComponent , data: { title: 'MediSphere-Dashboard' } },
+  { path: 'createhospital', component: CreatehospitalComponent , data: { title: 'MediSphere-Create Hospital' } },  
+  { path: 'schedule-maintenance', component: ScheduleMaintenanceComponent , data: { title: 'MediSphere-Schedule-Maintenance' } },  
+  { path: 'requestequipment', component: RequestequipmentComponent , data: { title: 'MediSphere-Request-Equipment' } },  
+  { path: 'maintenance', component: MaintenanceComponent , data: { title: 'MediSphere-Maintenance' } },  
+  { path: 'orders', component: OrdersComponent , data: { title: 'MediSphere-Orders' }},  
+  { path: 'homepage', component: HomepageComponent ,data: { title: 'MediSphere-HomePage' }},  
   { path: '', redirectTo: '/homepage', pathMatch: 'full' },
 
   // { path: '**', redirectTo: '/dashboard', pathMatch: 'full' },
