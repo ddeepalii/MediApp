@@ -235,4 +235,13 @@ export class CreatehospitalComponent implements OnInit {
       this.equipmentForm.markAllAsTouched();
     }
   }
+
+  editHospital():void{
+
+  }
+
+
+  deleteHospital():void{
+
+  }
 }

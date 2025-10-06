@@ -23,7 +23,8 @@
           <div class="mb-3">
             <label class="form-label fw-bold">Hospital Location</label>
             <input formControlName="location" type="text" class="form-control" placeholder="Location of Hospital" />
-            <div *ngIf="itemForm.get('location')?.invalid && (itemForm.get('location')?.dirty || itemForm.get('location')?.touched)"
+            <div
+              *ngIf="itemForm.get('location')?.invalid && (itemForm.get('location')?.dirty || itemForm.get('location')?.touched)"
               class="text-danger fw-bold mt-1">*Please Enter location</div>
           </div>
 
@@ -61,6 +62,12 @@
                     Assign Equipment
                   </button>
                 </td>
+
+                <td>
+                  <button class="btn btn-sm btn-primary me-2" (click)="editHospital(hospital)">Update</button>
+                  <button class="btn btn-sm btn-danger" (click)="deleteHospital(hospital.id)">Delete</button>
+                </td>
+
               </tr>
             </tbody>
           </table>
@@ -123,14 +130,16 @@
               <div class="mb-3">
                 <label class="form-label fw-bold">Equipment Name</label>
                 <input type="text" class="form-control" formControlName="name" placeholder="Equipment Name" />
-                <div *ngIf="equipmentForm.get('name')?.invalid && (equipmentForm.get('name')?.dirty || equipmentForm.get('name')?.touched)"
+                <div
+                  *ngIf="equipmentForm.get('name')?.invalid && (equipmentForm.get('name')?.dirty || equipmentForm.get('name')?.touched)"
                   class="text-danger fw-bold mt-1">*Please Enter name</div>
               </div>
 
               <div class="mb-3">
                 <label class="form-label fw-bold">Description</label>
                 <input type="text" class="form-control" formControlName="description" placeholder="Description" />
-                <div *ngIf="equipmentForm.get('description')?.invalid && (equipmentForm.get('description')?.dirty || equipmentForm.get('description')?.touched)"
+                <div
+                  *ngIf="equipmentForm.get('description')?.invalid && (equipmentForm.get('description')?.dirty || equipmentForm.get('description')?.touched)"
                   class="text-danger fw-bold mt-1">*Please Enter description</div>
               </div>
 
