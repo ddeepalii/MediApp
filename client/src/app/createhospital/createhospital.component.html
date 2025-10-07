@@ -1,13 +1,18 @@
-<!-- Main Container -->
+<!-- Main Container
+ 
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
 <div class="container-fluid py-4">
   <div class="container">
 
-    <!-- Page Title -->
+   
     <div class="text-center mb-4">
       <h2 class="fw-bold">Hospital Management</h2>
     </div>
 
-    <!-- Add Hospital Card -->
+    
     <div class="card shadow mb-5">
       <div class="card-header fw-bold">Add Hospital</div>
       <div class="card-body">
@@ -37,48 +42,47 @@
       </div>
     </div>
 
-    <!-- Hospital Table  -->
+    
     <div class="card shadow mb-5">
       <div class="card-header fw-bold">Hospital Information</div>
       <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-bordered table-hover table-striped align-middle">
-            <thead class="table-dark">
-              <tr>
-                <th scope="col">Hospital ID</th>
-                <th scope="col">Hospital Name</th>
-                <th scope="col">Location</th>
-                <th scope="col">Assign Equipment</th>
-                <th scope="col">Update</th>
-                <th scope="col">Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let hospital of hospitalList">
-                <td>{{ hospital.id }}</td>
-                <td>{{ hospital.name }}</td>
-                <td>{{ hospital.location }}</td>
-                <td>
-                  <button class="btn btn-sm btn-secondary" (click)="Addequipment(hospital)" data-bs-toggle="modal"
+        <div class="row g-3">
+          <div class="col-md-6 col-lg-4" *ngFor="let hospital of hospitalList; let i = index" [style.animation-delay]="i * 0.15 + 's'">
+            <div class="card hospital-card h-100">
+              <div class="card-body">
+                <h5 class="card-title text-dark fw-bold">
+                  <i class="fas fa-hospital"></i> {{ hospital.name }}
+                </h5>
+                <p class="card-text text-secondary mb-2">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span><strong>Location:</strong> {{ hospital.location }}</span>
+                </p>
+                <p class="card-text text-secondary mb-2">
+                  <i class="fas fa-id-badge"></i>
+                  <span><strong>ID:</strong> {{ hospital.id }}</span>
+                </p>
+
+               
+                <div class="mt-3 d-flex flex-wrap gap-2">
+                  <button class="btn btn-secondary btn-sm" (click)="Addequipment(hospital)" data-bs-toggle="modal"
                     data-bs-target="#driverModal">
-                    Assign Equipment
+                    <i class="fas fa-tools"></i> 
                   </button>
-                </td>
-                <td>
-                  <button class="btn btn-sm btn-primary" (click)="editHospital(hospital)">Update</button>
-                </td>
-                <td>
-                  <button class="btn btn-sm btn-danger" (click)="deleteHospital(hospital.id)">Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  <button class="btn btn-primary btn-sm" (click)="editHospital(hospital)">
+                    <i class="fas fa-pencil-alt"></i> 
+                  </button>
+                  <button class="btn btn-danger btn-sm" (click)="deleteHospital(hospital.id)">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Modal Search & Filter -->
-
+  
     <div class="modal-body">
       <div class="input-group mb-3">
         <input type="text" class="form-control" placeholder="Search Hospital Name or Location or ID"
@@ -87,118 +91,432 @@
         <button class="btn btn-secondary ms-2" type="button" (click)="closeIt()">Clear</button>
       </div>
 
-      <!-- Status Messages -->
+    
       <div *ngIf="isClick !== true" class="alert alert-warning p-2">{{ NotFoundMessage }}</div>
       <div *ngIf="isClick === true" class="alert alert-success p-2">{{ FoundMessage }}</div>
 
-      <!-- Filtered Table -->
-      <!-- <div class="table-responsive" *ngIf="showHospitalfilterData && isClick === true">
-        <table class="table table-bordered align-middle">
-          <thead class="bg-dark text-white">
-            <tr>
-              <th>Hospital ID</th>
-              <th>Hospital Name</th>
-              <th>Location</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let hospital of filteredHospitalList">
-              <td>{{ hospital.id }}</td>
-              <td>{{ hospital.name }}</td>
-              <td>{{ hospital.location }}</td>
 
-              <td>
-                <button class="btn btn-sm btn-primary" (click)="Addequipment(hospital)" data-bs-toggle="modal"
-                  data-bs-target="#driverModal">Assign Equipment</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div> -->
-      <!-- Filtered Table -->
-      <div class="table-responsive" *ngIf="showHospitalfilterData && isClick === true">
-        <table class="table table-bordered table-hover table-striped align-middle">
-          <thead class="table-dark">
-            <tr>
-              <th scope="col">Hospital ID</th>
-              <th scope="col">Hospital Name</th>
-              <th scope="col">Location</th>
-              <th scope="col">Assign Equipment</th>
-              <th scope="col">Update</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let hospital of filteredHospitalList">
-              <td>{{ hospital.id }}</td>
-              <td>{{ hospital.name }}</td>
-              <td>{{ hospital.location }}</td>
-              <td>
-                <button class="btn btn-sm btn-secondary" (click)="Addequipment(hospital)" data-bs-toggle="modal"
-                  data-bs-target="#driverModal">
-                  Assign Equipment
-                </button>
-              </td>
-              <td>
-                <button class="btn btn-sm btn-primary" (click)="editHospital(hospital)">Update</button>
-              </td>
-              <td>
-                <button class="btn btn-sm btn-danger" (click)="deleteHospital(hospital.id)">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <div *ngIf="showHospitalfilterData && isClick === true">
+        <div class="row g-3">
+          <div class="col-md-6 col-lg-4" *ngFor="let hospital of filteredHospitalList; let i = index" [style.animation-delay]="i * 0.15 + 's'">
+            <div class="card hospital-card h-100">
+              <div class="card-body">
+                <h5 class="card-title text-dark fw-bold">
+                  <i class="fas fa-hospital"></i> {{ hospital.name }}
+                </h5>
+                <p class="card-text text-secondary mb-2">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span><strong>Location:</strong> {{ hospital.location }}</span>
+                </p>
+                <p class="card-text text-secondary mb-2">
+                  <i class="fas fa-id-badge"></i>
+                  <span><strong>ID:</strong> {{ hospital.id }}</span>
+                </p>
 
-      <!-- Assign Equipment Modal -->
-      <div class="modal fade" id="driverModal" tabindex="-1" aria-labelledby="driverModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-
-            <div class="modal-header">
-              <h5 class="modal-title" id="driverModalLabel">Assign Equipment</h5>
+               
+                <div class="mt-3 d-flex flex-wrap gap-2">
+                  <button class="btn btn-secondary btn-sm" (click)="Addequipment(hospital)" data-bs-toggle="modal"
+                    data-bs-target="#driverModal">
+                    <i class="fas fa-tools"></i> Assign Equipment
+                  </button>
+                  <button class="btn btn-primary btn-sm" (click)="editHospital(hospital)">
+                    <i class="fas fa-pencil-alt"></i> Update
+                  </button>
+                  <button class="btn btn-danger btn-sm" (click)="deleteHospital(hospital.id)">
+                    <i class="fas fa-trash-alt"></i> Delete
+                  </button>
+                </div>
+              </div>
             </div>
-
-
-            <!-- Filtering and Searching -->
-            <div class="modal-body">
-              <form [formGroup]="equipmentForm" (ngSubmit)="submitEquipment()"
-                class="animate__animated animate__fadeIn">
-                <input type="hidden" formControlName="hospitalId" />
-
-                <div class="mb-3">
-                  <label class="form-label fw-bold">Equipment Name</label>
-                  <input type="text" class="form-control" formControlName="name" placeholder="Equipment Name" />
-                  <div
-                    *ngIf="equipmentForm.get('name')?.invalid && (equipmentForm.get('name')?.dirty || equipmentForm.get('name')?.touched)"
-                    class="text-danger fw-bold mt-1">*Please Enter name</div>
-                </div>
-
-
-                <div class="mb-3">
-                  <label class="form-label fw-bold">Description</label>
-                  <input type="text" class="form-control" formControlName="description" placeholder="Description" />
-                  <div
-                    *ngIf="equipmentForm.get('description')?.invalid && (equipmentForm.get('description')?.dirty || equipmentForm.get('description')?.touched)"
-                    class="text-danger fw-bold mt-1">*Please Enter description</div>
-                </div>
-
-
-                <div *ngIf="showMessage" class="alert alert-success mt-3">{{ responseMessage }}</div>
-                <div *ngIf="showError" class="alert alert-danger mt-3">{{ errorMessage }}</div>
-
-                <div class="modal-footer px-0">
-                  <button type="submit" class="btn btn-primary" [disabled]="equipmentForm.invalid">Save</button>
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-              </form>
-            </div>
-
           </div>
         </div>
       </div>
+    </div>
 
+   
+    <div class="modal fade" id="driverModal" tabindex="-1" aria-labelledby="driverModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title" id="driverModalLabel">Assign Equipment</h5>
+          </div>
+
+         
+          <div class="modal-body">
+            <form [formGroup]="equipmentForm" (ngSubmit)="submitEquipment()"
+              class="animate__animated animate__fadeIn">
+              <input type="hidden" formControlName="hospitalId" />
+
+              <div class="mb-3">
+                <label class="form-label fw-bold">Equipment Name</label>
+                <input type="text" class="form-control" formControlName="name" placeholder="Equipment Name" />
+                <div
+                  *ngIf="equipmentForm.get('name')?.invalid && (equipmentForm.get('name')?.dirty || equipmentForm.get('name')?.touched)"
+                  class="text-danger fw-bold mt-1">*Please Enter name</div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-bold">Description</label>
+                <input type="text" class="form-control" formControlName="description" placeholder="Description" />
+                <div
+                  *ngIf="equipmentForm.get('description')?.invalid && (equipmentForm.get('description')?.dirty || equipmentForm.get('description')?.touched)"
+                  class="text-danger fw-bold mt-1">*Please Enter description</div>
+              </div>
+
+              <div *ngIf="showMessage" class="alert alert-success mt-3">{{ responseMessage }}</div>
+              <div *ngIf="showError" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+
+              <div class="modal-footer px-0">
+                <button type="submit" class="btn btn-primary" [disabled]="equipmentForm.invalid">Save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div> -->
+
+<!-- Main Container -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
+<div class="hospital-container">
+  <div class="animated-background">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+  </div>
+
+  <div class="content-wrapper">
+    <!-- Page Title -->
+    <div class="page-header">
+      <h2 class="main-title">
+        <i class="fas fa-hospital-alt title-icon"></i>
+        Hospital Management System
+      </h2>
+      <div class="title-underline"></div>
+    </div>
+
+    <!-- Add Hospital Card -->
+    <div class="glass-card add-hospital-card">
+      <div class="card-header-custom">
+        <i class="fas fa-plus-circle"></i>
+        <span>Add New Hospital</span>
+      </div>
+      <div class="card-body-custom">
+        <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" class="hospital-form">
+          
+          <div class="form-group-custom">
+            <label class="form-label-custom">
+              <i class="fas fa-hospital"></i>
+              Hospital Name
+            </label>
+            <div class="input-wrapper">
+              <input 
+                formControlName="name" 
+                type="text" 
+                class="form-input-custom" 
+                placeholder="Enter Hospital Name" 
+              />
+              <span class="input-border"></span>
+            </div>
+            <div 
+              *ngIf="itemForm.get('name')?.invalid && (itemForm.get('name')?.dirty || itemForm.get('name')?.touched)"
+              class="error-message">
+              <i class="fas fa-exclamation-circle"></i>
+              Please enter hospital name
+            </div>
+          </div>
+
+          <div class="form-group-custom">
+            <label class="form-label-custom">
+              <i class="fas fa-map-marker-alt"></i>
+              Hospital Location
+            </label>
+            <div class="input-wrapper">
+              <input 
+                formControlName="location" 
+                type="text" 
+                class="form-input-custom" 
+                placeholder="Enter Hospital Location" 
+              />
+              <span class="input-border"></span>
+            </div>
+            <div
+              *ngIf="itemForm.get('location')?.invalid && (itemForm.get('location')?.dirty || itemForm.get('location')?.touched)"
+              class="error-message">
+              <i class="fas fa-exclamation-circle"></i>
+              Please enter hospital location
+            </div>
+          </div>
+
+          <button class="btn-submit" [disabled]="itemForm.invalid">
+            <span class="btn-text">{{ editingHospitalId ? 'Update Hospital' : 'Add Hospital' }}</span>
+            <i class="fas fa-arrow-right btn-icon"></i>
+          </button>
+
+          <div *ngIf="showMessage" class="alert-custom alert-success">
+            <i class="fas fa-check-circle"></i>
+            {{ responseMessage }}
+          </div>
+          <div *ngIf="showError" class="alert-custom alert-error">
+            <i class="fas fa-times-circle"></i>
+            {{ errorMessage }}
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <!-- Search Section -->
+    <div class="search-section">
+      <div class="search-wrapper">
+        <i class="fas fa-search search-icon"></i>
+        <input 
+          type="text" 
+          class="search-input" 
+          placeholder="Search by Hospital Name, Location, or ID"
+          [(ngModel)]="modalSearchQuery" 
+          (keyup.enter)="filterHospital()" 
+        />
+        <button class="btn-search" type="button" (click)="filterHospital()">
+          <i class="fas fa-search"></i>
+          Search
+        </button>
+        <button class="btn-clear" type="button" (click)="closeIt()">
+          <i class="fas fa-times"></i>
+          Clear
+        </button>
+      </div>
+
+      <!-- Status Messages -->
+      <div *ngIf="isClick !== true" class="search-alert alert-warning">
+        <i class="fas fa-info-circle"></i>
+        {{ NotFoundMessage }}
+      </div>
+      <div *ngIf="isClick === true && showHospitalfilterData" class="search-alert alert-success">
+        <i class="fas fa-check-circle"></i>
+        {{ FoundMessage }}
+      </div>
+    </div>
+
+    <!-- Hospital Card Grid Display -->
+    <div class="glass-card hospital-list-card" *ngIf="showHospitalData">
+      <div class="card-header-custom">
+        <i class="fas fa-hospital-user"></i>
+        <span>All Hospitals</span>
+      </div>
+      <div class="card-body-custom">
+        <div class="hospital-grid">
+          <div 
+            class="hospital-item" 
+            *ngFor="let hospital of hospitalList; let i = index" 
+            [style.animation-delay]="i * 0.1 + 's'">
+            <div class="hospital-card">
+              <div class="hospital-card-header">
+                <div class="hospital-icon-wrapper">
+                  <i class="fas fa-hospital"></i>
+                </div>
+                <h5 class="hospital-name">{{ hospital.name }}</h5>
+              </div>
+              
+              <div class="hospital-details">
+                <div class="detail-item">
+                  <i class="fas fa-map-marker-alt detail-icon"></i>
+                  <div class="detail-content">
+                    <span class="detail-label">Location</span>
+                    <span class="detail-value">{{ hospital.location }}</span>
+                  </div>
+                </div>
+                
+                <div class="detail-item">
+                  <i class="fas fa-id-badge detail-icon"></i>
+                  <div class="detail-content">
+                    <span class="detail-label">Hospital ID</span>
+                    <span class="detail-value">{{ hospital.id }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hospital-actions">
+                <button 
+                  class="action-btn btn-equipment" 
+                  (click)="Addequipment(hospital)" 
+                  data-bs-toggle="modal"
+                  data-bs-target="#driverModal">
+                  <i class="fas fa-tools"></i>
+                  <span>Equipment</span>
+                </button>
+                <button class="action-btn btn-edit" (click)="editHospital(hospital)">
+                  <i class="fas fa-pencil-alt"></i>
+                  <span>Edit</span>
+                </button>
+                <button class="action-btn btn-delete" (click)="deleteHospital(hospital.id)">
+                  <i class="fas fa-trash-alt"></i>
+                  <span>Delete</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filtered Hospital Card Grid -->
+    <div class="glass-card hospital-list-card" *ngIf="showHospitalfilterData && isClick === true">
+      <div class="card-header-custom">
+        <i class="fas fa-filter"></i>
+        <span>Search Results</span>
+      </div>
+      <div class="card-body-custom">
+        <div class="hospital-grid">
+          <div 
+            class="hospital-item" 
+            *ngFor="let hospital of filteredHospitalList; let i = index" 
+            [style.animation-delay]="i * 0.1 + 's'">
+            <div class="hospital-card">
+              <div class="hospital-card-header">
+                <div class="hospital-icon-wrapper">
+                  <i class="fas fa-hospital"></i>
+                </div>
+                <h5 class="hospital-name">{{ hospital.name }}</h5>
+              </div>
+              
+              <div class="hospital-details">
+                <div class="detail-item">
+                  <i class="fas fa-map-marker-alt detail-icon"></i>
+                  <div class="detail-content">
+                    <span class="detail-label">Location</span>
+                    <span class="detail-value">{{ hospital.location }}</span>
+                  </div>
+                </div>
+                
+                <div class="detail-item">
+                  <i class="fas fa-id-badge detail-icon"></i>
+                  <div class="detail-content">
+                    <span class="detail-label">Hospital ID</span>
+                    <span class="detail-value">{{ hospital.id }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hospital-actions">
+                <button 
+                  class="action-btn btn-equipment" 
+                  (click)="Addequipment(hospital)" 
+                  data-bs-toggle="modal"
+                  data-bs-target="#driverModal">
+                  <i class="fas fa-tools"></i>
+                  <span>Equipment</span>
+                </button>
+                <button class="action-btn btn-edit" (click)="editHospital(hospital)">
+                  <i class="fas fa-pencil-alt"></i>
+                  <span>Edit</span>
+                </button>
+                <button class="action-btn btn-delete" (click)="deleteHospital(hospital.id)">
+                  <i class="fas fa-trash-alt"></i>
+                  <span>Delete</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Assign Equipment Modal -->
+<div class="modal fade" id="driverModal" tabindex="-1" aria-labelledby="driverModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal-custom">
+      <div class="modal-header-custom">
+        <h5 class="modal-title-custom">
+          <i class="fas fa-tools"></i>
+          Assign Equipment
+        </h5>
+        <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body-custom">
+        <form [formGroup]="equipmentForm" (ngSubmit)="submitEquipment()" class="equipment-form">
+          <input type="hidden" formControlName="hospitalId" />
+
+          <div class="form-group-custom">
+            <label class="form-label-custom">
+              <i class="fas fa-cog"></i>
+              Equipment Name
+            </label>
+            <div class="input-wrapper">
+              <input 
+                type="text" 
+                class="form-input-custom" 
+                formControlName="name" 
+                placeholder="Enter Equipment Name" 
+              />
+              <span class="input-border"></span>
+            </div>
+            <div
+              *ngIf="equipmentForm.get('name')?.invalid && (equipmentForm.get('name')?.dirty || equipmentForm.get('name')?.touched)"
+              class="error-message">
+              <i class="fas fa-exclamation-circle"></i>
+              Please enter equipment name
+            </div>
+          </div>
+
+          <div class="form-group-custom">
+            <label class="form-label-custom">
+              <i class="fas fa-align-left"></i>
+              Description
+            </label>
+            <div class="input-wrapper">
+              <input 
+                type="text" 
+                class="form-input-custom" 
+                formControlName="description" 
+                placeholder="Enter Equipment Description" 
+              />
+              <span class="input-border"></span>
+            </div>
+            <div
+              *ngIf="equipmentForm.get('description')?.invalid && (equipmentForm.get('description')?.dirty || equipmentForm.get('description')?.touched)"
+              class="error-message">
+              <i class="fas fa-exclamation-circle"></i>
+              Please enter description
+            </div>
+          </div>
+
+          <div *ngIf="showMessage" class="alert-custom alert-success">
+            <i class="fas fa-check-circle"></i>
+            {{ responseMessage }}
+          </div>
+          <div *ngIf="showError" class="alert-custom alert-error">
+            <i class="fas fa-times-circle"></i>
+            {{ errorMessage }}
+          </div>
+
+          <div class="modal-footer-custom">
+            <button type="submit" class="btn-modal-submit" [disabled]="equipmentForm.invalid">
+              <i class="fas fa-save"></i>
+              Save Equipment
+            </button>
+            <button type="button" class="btn-modal-close" data-bs-dismiss="modal">
+              <i class="fas fa-times"></i>
+              Close
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
+</div>
