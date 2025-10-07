@@ -42,11 +42,19 @@ export class HttpService {
   //adding equipments to the particular hospital from admin end
   addEquipment(details: any, hospitalId: any): Observable<any> {
     return this.http.post<any>(
-      `${this.serverName}/api/hospital/equipment?hospitalId=${hospitalId}`,
-      details, // Body
-      this.getRequestOptions()
-    );
+      `${this.serverName}/api/hospital/equipment?hospitalId=${hospitalId}`, details, this.getRequestOptions());
   }
+
+  updateHospital(id: number, data: any): Observable<any> {
+    return this.http.put(`${this.serverName}/api/hospital/update/${id}`, data, this.getRequestOptions());
+  }
+
+  deleteHospital(id: number): Observable<any> {
+    return this.http.delete(`${this.serverName}/api/hospital/delete/${id}`, this.getRequestOptions());
+  }
+
+
+
 
   //supplier will get all the orders requested by hospitals
   getorders(): Observable<any> {

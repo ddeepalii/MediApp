@@ -1,117 +1,183 @@
 /* General Layout */
 body {
-  background: linear-gradient(135deg, #e8f0ff, #d1e3ff);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Headings */
-h2 {
+  background-color: #f4f9ff;
+  margin: 0;
+  padding: 0;
   color: #003366;
 }
 
-/* Cards */
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Page Title */
+.text-center h2 {
+  font-size: 2rem;
+  color: #004080;
+  margin-bottom: 20px;
+}
+
+/* Card Styles */
 .card {
-  border: none;
+  background-color: #ffffff;
   border-radius: 12px;
-  background-color: #fff;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 64, 128, 0.1);
+  margin-bottom: 30px;
+  overflow: hidden;
 }
 
 .card-header {
   background-color: #004080;
-  color: white;
-  font-weight: 600;
-  font-size: 1.05rem;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  color: #ffffff;
+  padding: 12px 20px;
+  font-weight: bold;
+  font-size: 1.1rem;
 }
 
-/* Inputs */
-.form-control {
-  border: 1px solid #c0c0c0;
+.card-body {
+  padding: 20px;
+}
+
+/* Form Styles */
+form .form-label {
+  font-weight: bold;
+  color: #003366;
+}
+
+form .form-control {
+  border: 1px solid #c4d8f7;
   border-radius: 6px;
-  transition: 0.3s ease;
+  padding: 8px 12px;
+  transition: border-color 0.3s ease;
 }
 
-.form-control:focus {
+form .form-control:focus {
   border-color: #007bff;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
-/* Buttons */
-.btn-primary {
-  background-color: #004080;
+form .btn {
+  padding: 8px 16px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form .btn-primary {
+  background-color: #007bff;
+  color: white;
   border: none;
 }
 
-.btn-primary:hover {
-  background-color: #003366;
+form .btn-primary:hover {
+  background-color: #0056b3;
 }
 
-.btn-secondary {
+form .btn-secondary {
   background-color: #6c757d;
+  color: white;
+  border: none;
 }
 
-.btn-sm {
-  padding: 0.35rem 0.65rem;
-  font-size: 0.875rem;
+form .btn-secondary:hover {
+  background-color: #5a6268;
 }
 
-/* Tables */
-.table {
-  background-color: #fff;
-  border-radius: 8px;
-}
-
-.table th {
-  background-color: #004080;
-  color: #fff;
-}
-
-.table td {
-  vertical-align: middle;
-}
-
-/* Alerts */
+/* Alert Messages */
 .alert {
-  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  padding: 10px 16px;
   border-radius: 6px;
-  font-size: 0.95rem;
 }
 
-/* Modal */
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.alert-warning {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+/* Table Styles */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.table th,
+.table td {
+  border: 1px solid #dee2e6;
+  padding: 10px;
+  text-align: left;
+}
+
+.table thead {
+  background-color: #004080;
+  color: white;
+}
+
+.table tbody tr:hover {
+  background-color: #f1f9ff;
+}
+
+/* Modal Styles */
 .modal-content {
   border-radius: 12px;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 64, 128, 0.2);
 }
 
 .modal-header {
   background-color: #004080;
   color: white;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  padding: 12px 20px;
+  border-bottom: none;
 }
 
 .modal-title {
-  font-weight: 600;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.modal-body {
+  padding: 20px;
 }
 
 .modal-footer {
+  padding: 12px 20px;
+  border-top: none;
+  display: flex;
   justify-content: flex-end;
+  gap: 10px;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .modal-dialog {
-    max-width: 90%;
+  .container {
+    padding: 10px;
   }
 
-  .table-responsive {
-    overflow-x: auto;
+  .card-body,
+  .modal-body {
+    padding: 15px;
   }
 
-  .btn {
-    width: 100%;
-    margin-bottom: 0.5rem;
+  .table th,
+  .table td {
+    font-size: 0.9rem;
+    padding: 8px;
   }
 }

@@ -40,7 +40,7 @@ export class RequestequipmentComponent implements OnInit {
         [Validators.required, this.dateValidator],
       ],
       quantity: [this.formModel.description, [Validators.required]],
-      status: [this.formModel.status, [Validators.required]],
+      status: ['Initiated'],
       equipmentId: [this.formModel.equipmentId, [Validators.required]],
       hospitalId: [this.formModel.equipmentId, [Validators.required]],
     });
