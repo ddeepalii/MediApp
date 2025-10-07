@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <!-- Hospital Table -->
+    <!-- Hospital Table  -->
     <div class="card shadow mb-5">
       <div class="card-header fw-bold">Hospital Information</div>
       <div class="card-body">
@@ -59,7 +59,8 @@
                 <td>{{ hospital.name }}</td>
                 <td>{{ hospital.location }}</td>
                 <td>
-                  <button class="btn btn-sm btn-secondary" (click)="Addequipment(hospital)" data-bs-toggle="modal" data-bs-target="#driverModal">
+                  <button class="btn btn-sm btn-secondary" (click)="Addequipment(hospital)" data-bs-toggle="modal"
+                    data-bs-target="#driverModal">
                     Assign Equipment
                   </button>
                 </td>
@@ -76,48 +77,128 @@
       </div>
     </div>
 
-    <!-- Assign Equipment Modal -->
-    <div class="modal fade" id="driverModal" tabindex="-1" aria-labelledby="driverModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
+    <!-- Modal Search & Filter -->
 
-          <div class="modal-header">
-            <h5 class="modal-title" id="driverModalLabel">Assign Equipment</h5>
+    <div class="modal-body">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search Hospital Name or Location or ID"
+          [(ngModel)]="modalSearchQuery" (keyup.enter)="filterHospital()" />
+        <button class="btn btn-primary" type="button" (click)="filterHospital()">Search</button>
+        <button class="btn btn-secondary ms-2" type="button" (click)="closeIt()">Clear</button>
+      </div>
+
+      <!-- Status Messages -->
+      <div *ngIf="isClick !== true" class="alert alert-warning p-2">{{ NotFoundMessage }}</div>
+      <div *ngIf="isClick === true" class="alert alert-success p-2">{{ FoundMessage }}</div>
+
+      <!-- Filtered Table -->
+      <!-- <div class="table-responsive" *ngIf="showHospitalfilterData && isClick === true">
+        <table class="table table-bordered align-middle">
+          <thead class="bg-dark text-white">
+            <tr>
+              <th>Hospital ID</th>
+              <th>Hospital Name</th>
+              <th>Location</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let hospital of filteredHospitalList">
+              <td>{{ hospital.id }}</td>
+              <td>{{ hospital.name }}</td>
+              <td>{{ hospital.location }}</td>
+
+              <td>
+                <button class="btn btn-sm btn-primary" (click)="Addequipment(hospital)" data-bs-toggle="modal"
+                  data-bs-target="#driverModal">Assign Equipment</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div> -->
+      <!-- Filtered Table -->
+      <div class="table-responsive" *ngIf="showHospitalfilterData && isClick === true">
+        <table class="table table-bordered table-hover table-striped align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">Hospital ID</th>
+              <th scope="col">Hospital Name</th>
+              <th scope="col">Location</th>
+              <th scope="col">Assign Equipment</th>
+              <th scope="col">Update</th>
+              <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let hospital of filteredHospitalList">
+              <td>{{ hospital.id }}</td>
+              <td>{{ hospital.name }}</td>
+              <td>{{ hospital.location }}</td>
+              <td>
+                <button class="btn btn-sm btn-secondary" (click)="Addequipment(hospital)" data-bs-toggle="modal"
+                  data-bs-target="#driverModal">
+                  Assign Equipment
+                </button>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-primary" (click)="editHospital(hospital)">Update</button>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-danger" (click)="deleteHospital(hospital.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Assign Equipment Modal -->
+      <div class="modal fade" id="driverModal" tabindex="-1" aria-labelledby="driverModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <h5 class="modal-title" id="driverModalLabel">Assign Equipment</h5>
+            </div>
+
+
+            <!-- Filtering and Searching -->
+            <div class="modal-body">
+              <form [formGroup]="equipmentForm" (ngSubmit)="submitEquipment()"
+                class="animate__animated animate__fadeIn">
+                <input type="hidden" formControlName="hospitalId" />
+
+                <div class="mb-3">
+                  <label class="form-label fw-bold">Equipment Name</label>
+                  <input type="text" class="form-control" formControlName="name" placeholder="Equipment Name" />
+                  <div
+                    *ngIf="equipmentForm.get('name')?.invalid && (equipmentForm.get('name')?.dirty || equipmentForm.get('name')?.touched)"
+                    class="text-danger fw-bold mt-1">*Please Enter name</div>
+                </div>
+
+
+                <div class="mb-3">
+                  <label class="form-label fw-bold">Description</label>
+                  <input type="text" class="form-control" formControlName="description" placeholder="Description" />
+                  <div
+                    *ngIf="equipmentForm.get('description')?.invalid && (equipmentForm.get('description')?.dirty || equipmentForm.get('description')?.touched)"
+                    class="text-danger fw-bold mt-1">*Please Enter description</div>
+                </div>
+
+
+                <div *ngIf="showMessage" class="alert alert-success mt-3">{{ responseMessage }}</div>
+                <div *ngIf="showError" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+
+                <div class="modal-footer px-0">
+                  <button type="submit" class="btn btn-primary" [disabled]="equipmentForm.invalid">Save</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </form>
+            </div>
+
           </div>
-
-          <div class="modal-body">
-            <form [formGroup]="equipmentForm" (ngSubmit)="submitEquipment()" class="animate__animated animate__fadeIn">
-              <input type="hidden" formControlName="hospitalId" />
-
-              <div class="mb-3">
-                <label class="form-label fw-bold">Equipment Name</label>
-                <input type="text" class="form-control" formControlName="name" placeholder="Equipment Name" />
-                <div
-                  *ngIf="equipmentForm.get('name')?.invalid && (equipmentForm.get('name')?.dirty || equipmentForm.get('name')?.touched)"
-                  class="text-danger fw-bold mt-1">*Please Enter name</div>
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label fw-bold">Description</label>
-                <input type="text" class="form-control" formControlName="description" placeholder="Description" />
-                <div
-                  *ngIf="equipmentForm.get('description')?.invalid && (equipmentForm.get('description')?.dirty || equipmentForm.get('description')?.touched)"
-                  class="text-danger fw-bold mt-1">*Please Enter description</div>
-              </div>
-
-              <div *ngIf="showMessage" class="alert alert-success mt-3">{{ responseMessage }}</div>
-              <div *ngIf="showError" class="alert alert-danger mt-3">{{ errorMessage }}</div>
-
-              <div class="modal-footer px-0">
-                <button type="submit" class="btn btn-primary" [disabled]="equipmentForm.invalid">Save</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              </div>
-            </form>
-          </div>
-
         </div>
       </div>
-    </div>
 
+    </div>
   </div>
-</div>
