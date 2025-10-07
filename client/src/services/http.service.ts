@@ -39,6 +39,15 @@ export class HttpService {
       this.getRequestOptions()
     );
   }
+
+  // supplier can delete an order by orderId
+deleteOrder(orderId: number): Observable<any> {
+  return this.http.delete(
+    `${this.serverName}/api/supplier/order/delete/${orderId}`,
+    this.getRequestOptions()
+  );
+}
+
   //adding equipments to the particular hospital from admin end
   addEquipment(details: any, hospitalId: any): Observable<any> {
     return this.http.post<any>(
@@ -71,6 +80,15 @@ export class HttpService {
       this.getRequestOptions()
     );
   }
+
+  // technician or hospital can delete a maintenance entry
+deleteMaintenance(id: number): Observable<any> {
+  return this.http.delete(
+    `${this.serverName}/api/maintenance/delete/${id}`,
+    this.getRequestOptions()
+  );
+}
+
 
   //In the admin side list of hospitals are shown in table
   getHospital(): Observable<any> {

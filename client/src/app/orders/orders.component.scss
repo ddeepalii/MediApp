@@ -1,124 +1,123 @@
-/* Container Styling */
-.container {
-  max-width: 1200px;
-  margin: auto;
+/* Google Font (if not already imported) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+.order-wrapper {
+  position: relative;
+  min-height: 100vh;
+  padding: 2rem 0;
+
+  /* Background image + transparent dark overlay */
+  background:
+    url('https://t3.ftcdn.net/jpg/07/89/02/80/360_F_789028082_Rj1tUsrEjcFkR5IekclgrQ7W2Vtstwxf.jpg') no-repeat center center fixed;
+
+  background-size: cover;
+  background-blend-mode: overlay;
 }
 
-/* Headings */
-h2 {
-  text-align: center;
+/* Main Heading Style */
+.section-heading {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 600;
   color: #003366;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+  display: inline-block;
 }
 
-/* Card Styling */
-.card {
+/* Decorative underline effect */
+.section-heading::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #004080, #00aaff);
+  margin: 10px auto 0 auto;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* Optional: Subtle hover animation */
+.section-heading:hover::after {
+  width: 90px;
+}
+
+.section-heading {
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+/* Order Card Styling */
+// .order-card {
+//   border-radius: 12px;
+//   border: none;
+//   background-color: #ffffff;
+//   transition: transform 0.2s;
+//   cursor: pointer;
+//   box-shadow: 50px 50px 10px 20px rgba(0, 0, 0, 0.3);
+// }
+
+.order-card {
   border-radius: 12px;
   border: none;
   background-color: #ffffff;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  margin-bottom: 2rem;
+  /* keep header background solid */
+  transition: transform 0.2s;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-.card-header {
+.order-card .card-body {
+  background-color: rgba(255, 255, 255, 0.85);
+  /* semi-transparent */
+  border-radius: 0 0 12px 12px;
+  /* rounded bottom corners */
+  padding: 1rem;
+}
+
+.order-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.3);
+}
+
+.order-card .card-header {
   background-color: #004080;
   color: white;
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: bold;
+  font-size: 1rem;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
 
-/* Table Styling */
-.table {
-  margin-bottom: 0;
+.order-card .badge {
+  background-color: #ffffff;
+  color: black;
+  font-size: 0.85rem;
+  padding: 5px 10px;
+  border-radius: 8px;
 }
 
-.table th {
-  background-color: #004080;
-  color: white;
-  font-weight: bold;
-  vertical-align: middle;
+
+
+/* Button Icons */
+.btn i {
+  margin-right: 4px;
 }
 
-.table td {
-  vertical-align: middle;
-  background-color: #f8f9fa;
-}
-
-.table p {
-  margin: 0;
-}
-
-/* Modal Styling */
-.modal-header {
-  background-color: #004080;
-  color: white;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-}
-
-.modal-title {
-  font-weight: bold;
-}
-
-.modal-body .form-control {
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-.modal-body .form-control:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 0 0.15rem rgba(0, 123, 255, 0.25);
-}
-
-/* Button Styling */
-.btn-primary {
-  background-color: #004080;
-  border: none;
-}
-
-.btn-primary:hover {
-  background-color: #003366;
-}
-
-.btn-secondary {
-  background-color: #6c757d;
-  border: none;
-}
-
-.btn-secondary:hover {
-  background-color: #5a6268;
-}
-
-.btn-warning {
-  font-weight: 500;
-}
-
-/* Alert Styling */
-.alert {
-  font-size: 0.95rem;
-  border-radius: 6px;
-}
-
-/* Status Styling Placeholder (dynamic from TS) */
-[ngStyle] {
-  font-weight: bold;
-}
-
-/* Responsive Fixes */
-@media (max-width: 768px) {
-  .table-responsive {
-    overflow-x: auto;
-  }
-
-  .btn {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .modal-dialog {
-    max-width: 95%;
+/* Responsive Cards */
+@media (max-width: 576px) {
+  .order-card {
+    margin-bottom: 1rem;
   }
 }

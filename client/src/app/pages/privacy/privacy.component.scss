@@ -1,13 +1,133 @@
-h2 {
-    font-family: 'Segoe UI', sans-serif;
+body{
+  background-color: #abc8d6;
+}
+
+/* Optional custom styling for form inputs */
+.about-card .form-control {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.about-card .form-control:focus {
+  border-color: #00aaff;
+  box-shadow: 0 0 0 0.15rem rgba(0, 170, 255, 0.25);
+  outline: none;
+}
+
+/* Button styling */
+.about-card .btn-primary {
+  background-color: #00aaff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.about-card .btn-primary:hover {
+  background-color: #008ecc;
+}
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@600;700&display=swap');
+
+body{
+  background-color: #abc8d6;
+}
+
+/* Container styling */
+.about-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  font-family: 'Open Sans', sans-serif;
+  color: #333;
+  transition: transform 0.3s ease;
+}
+
+.about-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Heading style */
+.about-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #004080;
+  margin-bottom: 1rem;
+}
+
+.about-title span {
+  color: #00aaff;
+}
+
+/* Paragraph style */
+.about-card p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  color: #444;
+}
+
+/* List styling */
+.about-list {
+  padding-left: 1.2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.about-list li {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+/* Image style */
+.about-img {
+  border-radius: 12px;
+  max-height: 350px;
+  width: 100%;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .about-title {
+    font-size: 1.8rem;
+    text-align: center;
   }
-  .accordion-button {
-    font-weight: bold;
+
+  .about-card {
+    padding: 1.5rem;
   }
-  ul {
-    padding-left: 20px;
+
+  .about-card p,
+  .about-list li {
+    font-size: 1rem;
   }
-  li {
-    margin-bottom: 8px;
-  }
-  
+}
+/* Optional: Make accordion match .about-card styling more closely */
+.about-card .accordion-button {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #004080;
+  background-color: #f1f8fc;
+}
+
+.about-card .accordion-button:not(.collapsed) {
+  background-color: #e0f4ff;
+  color: #003366;
+}
+
+.about-card .accordion-body {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #444;
+}
