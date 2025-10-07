@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
   FormGroup,
   ValidationErrors,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
@@ -16,126 +16,120 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./maintenance.component.scss'],
 })
 export class MaintenanceComponent implements OnInit {
-  formModel: any = { status: null };
-  showError: boolean = false;
-  errorMessage: any;
-  hospitalList: any = [];
   itemForm: FormGroup;
-  showMessage: any;
-  responseMessage: any;
-  maintenanceList: any = [];
+  maintenanceList: any[] = [];
+  showError: boolean = false;
+  errorMessage: string = '';
+  showMessage: boolean = false;
+  responseMessage: string = '';
+
+  @ViewChild('closeBtn') closeBtn!: ElementRef;
+
   constructor(
-    public router: Router,
-    public httpService: HttpService,
+    private router: Router,
+    private httpService: HttpService,
     private formBuilder: FormBuilder,
     private authService: AuthService
   ) {
-    if (
-      authService.getRole != 'HOSPITAL' &&
-      authService.getRole != 'TECHNICIAN'
-    ) {
-      this.router.navigateByUrl('dashboard'); // To restict other user to accessing the api which meant for technicican
+    const role = this.authService.getRole;
+    if (role !== 'HOSPITAL' && role !== 'TECHNICIAN') {
+      this.router.navigateByUrl('dashboard');
     }
-    //to Store the value which is coming in the form using the formbuilder
+
     this.itemForm = this.formBuilder.group({
-      scheduledDate: [
-        this.formModel.scheduledDate,
-        [Validators.required, this.dateValidator],
-      ],
-      completedDate: [
-        this.formModel.completedDate,
-        [Validators.required, this.dateValidator],
-      ],
-      description: [this.formModel.description, [Validators.required]],
-      status: [this.formModel.status, [Validators.required]],
-      maintenanceId: [this.formModel.maintenanceId],
+      scheduledDate: ['', [Validators.required, this.dateValidator]],
+      completedDate: ['', [Validators.required, this.dateValidator]],
+      description: ['', Validators.required],
+      status: ['', Validators.required],
+      maintenanceId: [''],
     });
   }
 
   ngOnInit(): void {
-    //this method get initiate first
     this.getMaintenance();
   }
-  //Custom Validation for Date
+
   dateValidator(control: AbstractControl): ValidationErrors | null {
     const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-
     if (!datePattern.test(control.value)) {
       return { invalidDate: true };
     }
-
     return null;
   }
 
-  //reponsible to fetch data about the maintenance status in the form list from the backend
-  getMaintenance() {
-    this.maintenanceList = [];
-    this.httpService.getMaintenance().subscribe(
-      (data: any) => {
+  getMaintenance(): void {
+    this.httpService.getMaintenance().subscribe({
+      next: (data: any) => {
         this.maintenanceList = data;
       },
-      (error) => {
-        // Handle error
+      error: (error) => {
         this.showError = true;
-        this.errorMessage = 'An error has Occured.Try again';
-        console.error('Login error:', error);
+        this.errorMessage = 'An error occurred while fetching maintenance.';
+        console.error('Fetch error:', error);
       }
-    );
-  }
-  // this method is reponsible got editing the completion date along with the status of the Maintenance of it
-  edit(val: any) {
-    const scheduledDate = new Date(val.scheduledDate); // conversion form string to Date format for easy manipulation and formatting the date Values
-    const completedDate = new Date(val.completedDate);
-    // updating the formGroup using patchValue method
-    // patchValue allows you to set the values of specific form controls within the FormGroup.
-    this.itemForm.patchValue({
-      // updating the formGroup using patchValue method
-      scheduledDate: scheduledDate.toISOString().substring(0, 10),
-      completedDate: completedDate.toISOString().substring(0, 10),
-      description: val.description,
-      status: val.status,
-      equipmentId: val.equipmentId,
-      maintenanceId: val.id,
     });
   }
-  //Responsible for updating the status for that particular maintenance
-  update() {
-    if (this.itemForm.valid) {
-      if (this.itemForm.valid) {
-        this.showError = false;
-        this.httpService
-          .updateMaintenance(
-            this.itemForm.value,
-            this.itemForm.controls['maintenanceId'].value
-          )
-          .subscribe(
-            (data: any) => {
-              this.itemForm.reset();
-              window.location.reload();
-            },
-            (error) => {
-              // Handle error
-              this.showError = true;
-              this.errorMessage =
-                'An error occurred while Loggin in Please Try Again';
-              console.error('Login error:', error);
-            }
-          );
-      } else {
-        this.itemForm.markAllAsTouched();
-      }
-    } else {
+
+  edit(maintenance: any): void {
+    const scheduledDate = new Date(maintenance.scheduledDate);
+    const completedDate = new Date(maintenance.completedDate);
+
+    this.itemForm.patchValue({
+      scheduledDate: scheduledDate.toISOString().substring(0, 10),
+      completedDate: completedDate.toISOString().substring(0, 10),
+      description: maintenance.description,
+      status: maintenance.status,
+      maintenanceId: maintenance.id,
+    });
+  }
+
+  update(): void {
+    if (this.itemForm.invalid) {
       this.itemForm.markAllAsTouched();
+      return;
+    }
+
+    const maintenanceId = this.itemForm.get('maintenanceId')?.value;
+
+    this.httpService.updateMaintenance(this.itemForm.value, maintenanceId).subscribe({
+      next: () => {
+        this.itemForm.reset();
+        this.getMaintenance();
+        this.responseMessage = 'Updated successfully!';
+        this.showMessage = true;
+
+        // ✅ Close modal
+        this.closeBtn.nativeElement.click();
+
+        // ✅ Hide message after 3 seconds
+        setTimeout(() => {
+          this.showMessage = false;
+        }, 3000);
+      },
+      error: (error) => {
+        this.showError = true;
+        this.errorMessage = 'An error occurred while updating maintenance.';
+        console.error('Update error:', error);
+      }
+    });
+  }
+
+  getStatusStyle(status: string): any {
+    const baseStyle = {
+      'font-weight': 'bold',
+      'font-size': '20px',
+    };
+
+    if (status === 'Serviced') {
+      return { ...baseStyle, color: 'green' };
+    } else if (status === 'In Progress') {
+      return { ...baseStyle, color: '#FFC300' };
+    } else {
+      return { ...baseStyle, color: '#3371FF' };
     }
   }
-  // This method is used for styling the status of maintence with help nystyle in Html part
-  getStatusStyle(status: string) {
-    if (status === 'Serviced') {
-      return { color: 'green', 'font-weight': 'bold', 'font-size': '20px' };
-    } else if (status === 'In Progress') {
-      return { color: '#FFC300 ', 'font-weight': 'bold', 'font-size': '20px' };
-    } else {
-      return { color: '#3371FF', 'font-weight': 'bold', 'font-size': '20px' };
-    }
+
+  delete(maintenance: any): void {  
+    console.log('Delete clicked for maintenance ID:', maintenance.id);
   }
 }

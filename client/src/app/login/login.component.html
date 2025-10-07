@@ -12,13 +12,22 @@
 
   <body>
     <section class="background-radial-gradient d-flex align-items-center justify-content-center min-vh-100">
-      <div class="container text-center text-white mb-5">
+      <!-- <div class="container text-center text-white mb-5">
         <h1 class="display-4 fw-bold">MediSphere</h1>
         <p class="lead fst-italic">More Than Treatment — A Partnership in Health.</p>
+      </div> -->
+
+      <div class="col-md-5 text-center">
+        <img src="assets/bannerimg.jpg" alt="Medical Equipment" class="img-fluid hero-img animate__animated animate__fadeInRight" />
       </div>
 
+
+      
       <div class="container d-flex justify-content-center">
+        
         <div class="card bg-glass p-4 shadow-lg" style="width: 100%; max-width: 450px">
+          <h1 class="display-4 fw-bold text-center">MediSphere</h1>
+            <p class="lead fst-italic text-center">More Than Treatment — A Partnership in Health.</p>
           <div class="card-body">
             <h4 class="mb-4 text-center text-primary">Login to Your Account</h4>
             <form [formGroup]="itemForm" (ngSubmit)="onLogin()">
