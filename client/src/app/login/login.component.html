@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="login.component.scss" />
   </head>
-
+ 
   <body>
     <!-- Animated Background with Floating Particles -->
     <div class="animated-background">
@@ -20,7 +20,7 @@
       <div class="particle particle-5"></div>
       <div class="particle particle-6"></div>
     </div>
-
+ 
     <section class="background-radial-gradient d-flex align-items-center justify-content-center min-vh-100">
       <div class="container">
         <div class="row align-items-center g-4">
@@ -35,13 +35,13 @@
               <div class="image-glow"></div>
             </div>
           </div>
-
+ 
           <!-- Login Form Section -->
           <div class="col-lg-6 order-1 order-lg-2">
             <div class="card bg-glass shadow-lg">
               <!-- Logo and Branding -->
               <div class="brand-header">
-              
+             
                 <!-- <h1 class="display-4 fw-bold text-center brand-title">
                   <span class="letter">M</span>
                   <span class="letter">e</span>
@@ -54,17 +54,17 @@
                   <span class="letter">r</span>
                   <span class="letter">e</span>
                 </h1> -->
-                
+               
                 <!-- <p class="lead fst-italic text-center tagline">
                   More Than Treatment — A Partnership in Health.
                 </p> -->
               </div>
-
+ 
               <div class="card-body">
                 <h4 class="mb-4 text-center text-primary form-title">
                   Login to Your Account
                 </h4>
-
+ 
                 <form [formGroup]="itemForm" (ngSubmit)="onLogin()">
                   <!-- Username Field -->
                   <div class="mb-4 form-group-animated">
@@ -93,7 +93,7 @@
                       <span class="error-icon">⚠</span> Username is required.
                     </div>
                   </div>
-
+ 
                   <!-- Password Field -->
                   <div class="mb-4 form-group-animated">
                     <div class="floating-label-group">
@@ -121,36 +121,18 @@
                       <span class="error-icon">⚠</span> Password is required.
                     </div>
                   </div>
-
-              <div class="mb-3">
-                <label class="form-label">CAPTCHA</label>
-                <div class="d-flex align-items-center">
-                  <span class="bg-light border px-3 py-2 me-2">{{ captchaCode }}</span>
-                  <button type="button" class="btn btn-outline-secondary btn-sm" (click)="generateCaptcha()">↻</button>
-                </div>
-                <input
-                  type="text"
-                  class="form-control mt-2"
-                  formControlName="captchaInput"
-                  placeholder="Enter the CAPTCHA code"
-                />
-                <div
-                  *ngIf="itemForm.get('captchaInput')?.invalid && (itemForm.get('captchaInput')?.dirty || itemForm.get('captchaInput')?.touched)"
-                  class="text-danger mt-1"
-                >
-                  CAPTCHA is required.
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                class="btn btn-primary w-100 mb-3"
-                [disabled]="itemForm.invalid"
-              >
-                Log In
-              </button>
-            </form>
-
+ 
+                  <!-- Login Button -->
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-login w-100 mb-3"
+                    [disabled]="itemForm.invalid"
+                  >
+                    <span class="btn-text">Log In</span>
+                    <span class="btn-icon">→</span>
+                  </button>
+                </form>
+ 
                 <!-- Register Link -->
                 <p class="text-center register-text">
                   Don't have an account?
@@ -161,7 +143,7 @@
                     Register Now
                   </a>
                 </p>
-
+ 
                 <!-- Error Alert -->
                 <div *ngIf="showError" class="alert alert-danger error-alert" role="alert">
                   <span class="alert-icon">✕</span>
@@ -175,3 +157,5 @@
     </section>
   </body>
 </html>
+ 
+<!-- added  -->
