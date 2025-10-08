@@ -22,12 +22,46 @@ export class ScheduleMaintenanceComponent implements OnInit {
   formModel: any = { status: null };
   showError: boolean = false;
   errorMessage: any;
-  hospitalList: any = [];
   assignModel: any = {};
   statusModel: any = {};
   showMessage: any;
   responseMessage: any;
   equipmentList: any = [];
+
+  hospitalList: any = [];
+  // --- Added for pagination ---
+  currentPage: number = 1; // current page number
+  itemsPerPage: number = 6; // number of maintenance cards per page
+
+  get paginatedMaintenance() {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    return this.maintenanceList.slice(start, end);
+  }
+
+  totalPages(): number {
+    return Math.ceil(this.maintenanceList.length / this.itemsPerPage);
+  }
+
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.totalPages()) {
+      this.currentPage = page;
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages()) {
+      this.currentPage++;
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+  // --- Pagination code ends ---
+
   isClick: boolean = false;
   constructor(
     public router: Router,
@@ -47,10 +81,10 @@ export class ScheduleMaintenanceComponent implements OnInit {
       ],
       description: [this.formModel.description, [Validators.required]],
       // status: [this.formModel.status, [Validators.required]],
-      status:['Initiated'],
+      status: ['Initiated'],
       equipmentId: [this.formModel.equipmentId, [Validators.required]],
       hospitalId: [this.formModel.hospitalId, [Validators.required]],
-    },{validators:this.dateValidator2});
+    }, { validators: this.dateValidator2 });
   }
   ngOnInit(): void {
     this.getHospital();
@@ -75,7 +109,7 @@ export class ScheduleMaintenanceComponent implements OnInit {
     }
     return null;
   }
- //Get all the list of Hospitals
+  //Get all the list of Hospitals
   getHospital() {
     this.hospitalList = [];
     this.httpService.getHospital().subscribe(
@@ -93,35 +127,35 @@ export class ScheduleMaintenanceComponent implements OnInit {
   }
   //check for validations and submit the data
   onSubmit() {
-    
-      if (this.itemForm.valid) {
-        alert("sucess")
-        this.showError = false;
-        
 
-        this.httpService
-          .scheduleMaintenance(
-            this.itemForm.value,
-            this.itemForm.value.equipmentId
-          )
-          .subscribe(
-            (data: any) => {
-              this.itemForm.reset();
-              this.showMessage = true;
-              this.responseMessage = 'Save Successfully';
-              this.getMaintenance();
-            },
-            (error) => {
-              this.showError = true;
-              this.errorMessage =
-                'An error occurred. Please try again later.';
-              console.error('Login error:', error);
-            }
-          );
-      } else {
-        this.itemForm.markAllAsTouched();
-      }
-    
+    if (this.itemForm.valid) {
+      alert("sucess")
+      this.showError = false;
+
+
+      this.httpService
+        .scheduleMaintenance(
+          this.itemForm.value,
+          this.itemForm.value.equipmentId
+        )
+        .subscribe(
+          (data: any) => {
+            this.itemForm.reset();
+            this.showMessage = true;
+            this.responseMessage = 'Save Successfully';
+            this.getMaintenance();
+          },
+          (error) => {
+            this.showError = true;
+            this.errorMessage =
+              'An error occurred. Please try again later.';
+            console.error('Login error:', error);
+          }
+        );
+    } else {
+      this.itemForm.markAllAsTouched();
+    }
+
   }
 
   //to see the status of the assign schedule maintainance
@@ -133,7 +167,7 @@ export class ScheduleMaintenanceComponent implements OnInit {
       this.isClick = false;
     }
   }
-   
+
   //used to fetch the hospitals from the databse
   onHospitalSelect($event: any) {
     let id = $event.target.value;

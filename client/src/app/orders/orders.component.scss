@@ -139,7 +139,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
+    background:
       radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
       radial-gradient(circle at 80% 80%, rgba(255, 135, 135, 0.3), transparent 50%),
       radial-gradient(circle at 40% 80%, rgba(138, 180, 248, 0.3), transparent 50%);
@@ -152,16 +152,24 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: 
-      repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.05) 35px, rgba(255,255,255,.05) 70px);
+    background-image:
+      repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255, 255, 255, .05) 35px, rgba(255, 255, 255, .05) 70px);
     opacity: 0.5;
+    z-index: -1;
     pointer-events: none;
   }
 }
 
 @keyframes gradientShift {
-  0%, 100% { transform: translateX(0) translateY(0); }
-  50% { transform: translateX(20px) translateY(20px); }
+
+  0%,
+  100% {
+    transform: translateX(0) translateY(0);
+  }
+
+  50% {
+    transform: translateX(20px) translateY(20px);
+  }
 }
 
 .section-heading {
@@ -202,6 +210,7 @@
     opacity: 0;
     transform: translateY(-30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -209,13 +218,25 @@
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes expandWidth {
-  from { width: 0; }
-  to { width: 120px; }
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 120px;
+  }
 }
 
 .order-card-wrapper {
@@ -227,6 +248,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -300,8 +322,14 @@
   }
 
   @keyframes shimmer {
-    0% { left: -100%; }
-    50%, 100% { left: 100%; }
+    0% {
+      left: -100%;
+    }
+
+    50%,
+    100% {
+      left: 100%;
+    }
   }
 
   .card-body {
@@ -310,7 +338,7 @@
   }
 }
 
-.status-badge { 
+.status-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -323,7 +351,7 @@
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   animation: pulse 2s infinite;
-  
+
 
   .status-dot {
     width: 8px;
@@ -334,7 +362,7 @@
 
   &.status-delivered {
     color: #10b981;
-    
+
     .status-dot {
       background: #10b981;
       box-shadow: 0 0 10px #10b981;
@@ -343,7 +371,7 @@
 
   &.status-in-transit {
     color: #f59e0b;
-    
+
     .status-dot {
       background: #f59e0b;
       box-shadow: 0 0 10px #f59e0b;
@@ -352,7 +380,7 @@
 
   &.status-pending {
     color: #3b82f6;
-    
+
     .status-dot {
       background: #3b82f6;
       box-shadow: 0 0 10px #3b82f6;
@@ -361,13 +389,27 @@
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .info-section {
@@ -537,7 +579,7 @@
     &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
-      
+
       &:hover {
         transform: none;
       }
@@ -624,5 +666,31 @@
 
   .order-card {
     margin-bottom: 1.5rem;
+  }
+}
+
+
+.pagination-wrapper {
+  text-align: center;
+  margin-top: 20px;
+
+  .pagination-btn {
+    padding: 6px 12px;
+    margin: 0 3px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: white;
+
+    &.active {
+      background-color: #3371FF;
+      color: white;
+      font-weight: bold;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 }

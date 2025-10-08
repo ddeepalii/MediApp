@@ -23,6 +23,35 @@ export class RequestequipmentComponent implements OnInit {
   hospitalList: any = [];
   assignModel: any = {};
   orderList: any = [];
+
+  // --- Added for pagination ---
+  currentPage: number = 1; // current page number
+  itemsPerPage: number = 6; // show 6 cards per page
+  get paginatedOrders() {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    return this.orderList.slice(start, end);
+  }
+  totalPages(): number {
+    return Math.ceil(this.orderList.length / this.itemsPerPage);
+  }
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.totalPages()) {
+      this.currentPage = page;
+    }
+  }
+  nextPage() {
+    if (this.currentPage < this.totalPages()) {
+      this.currentPage++;
+    }
+  }
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+  // --- Pagination code ends ---
+
   showMessage: any;
   responseMessage: any;
   equipmentList: any = [];

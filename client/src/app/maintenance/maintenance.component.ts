@@ -23,6 +23,35 @@ export class MaintenanceComponent implements OnInit {
   showMessage: boolean = false;
   responseMessage: string = '';
 
+  // Pagination variables
+  currentPage: number = 1;       // Current active page
+  itemsPerPage: number = 6;      // Number of cards per page
+  get paginatedMaintenance(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.maintenanceList.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  // Total pages for pagination
+  get totalPages(): number {
+    return Math.ceil(this.maintenanceList.length / this.itemsPerPage);
+  }
+
+  // Go to next page
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) this.currentPage++;
+  }
+
+  // Go to previous page
+  prevPage(): void {
+    if (this.currentPage > 1) this.currentPage--;
+  }
+
+  // Go to specific page
+  goToPage(page: number): void {
+    this.currentPage = page;
+  }
+
+
   @ViewChild('closeBtn') closeBtn!: ElementRef;
 
   constructor(
@@ -136,11 +165,11 @@ export class MaintenanceComponent implements OnInit {
         next: () => {
           // Refresh the maintenance list after successful deletion
           this.getMaintenance();
-          
+
           // Show success message
           // this.responseMessage = 'Maintenance deleted successfully!';
           this.showMessage = true;
-          
+
           // Hide message after 3 seconds
           setTimeout(() => {
             this.showMessage = false;
@@ -150,7 +179,7 @@ export class MaintenanceComponent implements OnInit {
           this.showError = true;
           this.errorMessage = 'An error occurred while deleting maintenance.';
           console.error('Delete error:', error);
-          
+
           // Hide error message after 3 seconds
           setTimeout(() => {
             this.showError = false;
