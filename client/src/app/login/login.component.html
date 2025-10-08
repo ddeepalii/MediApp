@@ -73,6 +73,26 @@
                 </div>
               </div>
 
+              <div class="mb-3">
+                <label class="form-label">CAPTCHA</label>
+                <div class="d-flex align-items-center">
+                  <span class="bg-light border px-3 py-2 me-2">{{ captchaCode }}</span>
+                  <button type="button" class="btn btn-outline-secondary btn-sm" (click)="generateCaptcha()">↻</button>
+                </div>
+                <input
+                  type="text"
+                  class="form-control mt-2"
+                  formControlName="captchaInput"
+                  placeholder="Enter the CAPTCHA code"
+                />
+                <div
+                  *ngIf="itemForm.get('captchaInput')?.invalid && (itemForm.get('captchaInput')?.dirty || itemForm.get('captchaInput')?.touched)"
+                  class="text-danger mt-1"
+                >
+                  CAPTCHA is required.
+                </div>
+              </div>
+
               <button
                 type="submit"
                 class="btn btn-primary w-100 mb-3"

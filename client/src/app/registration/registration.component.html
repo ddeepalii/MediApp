@@ -64,7 +64,8 @@
                     <span>{{ hasDigit ? '✅' : '❌' }}</span> At least one digit [0-9]
                   </li>
                   <li [class.valid]="hasSpecialChar" [class.invalid]="!hasSpecialChar">
-                    <span>{{ hasSpecialChar ? '✅' : '❌' }}</span> At least one special character [&#64; $. # ! % * ? & ^]
+                    <span>{{ hasSpecialChar ? '✅' : '❌' }}</span> At least one special character [&#64; $. # ! % * ? &
+                    ^]
                   </li>
                   <li [class.valid]="hasMinLength" [class.invalid]="!hasMinLength">
                     <span>{{ hasMinLength ? '✅' : '❌' }}</span> Minimum 8 characters
@@ -104,6 +105,22 @@
               </div>
             </div>
 
+            <!-- Custom CAPTCHA -->
+            <div class="mb-3">
+              <label class="form-label">CAPTCHA</label>
+              <div class="d-flex align-items-center">
+                <span class="bg-light border px-3 py-2 me-2">{{ captchaCode }}</span>
+                <button type="button" class="btn btn-outline-secondary btn-sm" (click)="generateCaptcha()">↻</button>
+              </div>
+              <input type="text" class="form-control mt-2" formControlName="captchaInput"
+                placeholder="Enter the CAPTCHA code" />
+              <div
+                *ngIf="itemForm.get('captchaInput')?.invalid && (itemForm.get('captchaInput')?.dirty || itemForm.get('captchaInput')?.touched)"
+                class="text-danger mt-1">
+                *Please enter the CAPTCHA code.
+              </div>
+            </div>
+
             <!-- Submit Button -->
             <button type="submit" class="btn btn-primary w-100 mb-3" [disabled]="itemForm.invalid">
               Submit
@@ -111,7 +128,7 @@
           </form>
 
           <!-- Outside the form -->
-         
+
           <p class="text-center">
             Already have an account?
             <a [routerLink]="['/login']" class="text-decoration-none text-primary fw-bold">
