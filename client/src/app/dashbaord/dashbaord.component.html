@@ -1,97 +1,158 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- Animated Background Shapes -->
+<div class="all">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+<div class="background-shapes">
+  <div class="shape shape-1"></div>
+  <div class="shape shape-2"></div>
+  <div class="shape shape-3"></div>
+</div>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MediSphere - Dashboard</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <!-- <link rel="stylesheet" href="dashboard.component.css" /> -->
-</head>
-
-<body class="bg-light">
-  <div class="container py-5" id="head">
-    <h1 class="text-center mb-4"><b><i>Welcome "{{username}}" ({{ roleType }})</i></b></h1>
-
-    <!-- HOSPITAL DASHBOARD -->
-    <div *ngIf="roleType == 'HOSPITAL'">
-      <div class="row g-4 justify-content-center">
-        <!-- Create New Hospital -->
-        <div class="col-md-4">
-          <div class="custom-card h-100">
-            <img src="assets/hospital.png" alt="Hospital" />
-            <div class="card-body">
-              <h5 class="card-title">Create New Hospital</h5>
-              <p class="card-text">Let's build a better world together. Let's add a new hospital.</p>
-              <a routerLink="/createhospital" class="btn btn-primary w-100">See More</a>
-            </div>
-          </div>
-        </div>
-
-
-        <!-- Request Equipment -->
-        <div class="col-md-4">
-          <div class="custom-card h-100">
-            <img src="assets/equipment.png" alt="Hospital" />
-            <div class="card-body">
-              <h5 class="card-title">Request Equipment</h5>
-              <p class="card-text">Buckle Up! We are growing so let's get some new equipment!</p>
-              <a routerLink="/requestequipment" class="btn btn-primary w-100">See More</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Schedule Maintenance -->
-        <div class="col-md-4">
-          <div class="custom-card h-100">
-            <img src="assets/maintenance.png" alt="Hospital" />
-            <div class="card-body">
-              <h5 class="card-title">Schedule Maintenance</h5>
-              <p class="card-text">Fix the dysfunctional equipment by scheduling its maintenance.</p>
-              <a routerLink="/schedule-maintenance" class="btn btn-primary w-100">See More</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- SUPPLIER DASHBOARD -->
-    <div *ngIf="roleType == 'SUPPLIER'">
-      <div class="row justify-content-center">
-
-        <div class="col-md-4">
-          <div class="custom-card h-100">
-            <img src="assets/orderreport.png" alt="Report" />
-            <div class="card-body">
-              <h5 class="card-title">Order Report</h5>
-              <p class="card-text">Generate and manage order reports efficiently..</p>
-              <a routerLink="/orders" class="btn btn-primary w-100">See More</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- TECHNICIAN DASHBOARD -->
-    <div *ngIf="roleType == 'TECHNICIAN'">
-      <div class="row justify-content-center">
-        <div class="col-md-4">
-          <div class="custom-card h-100">
-            <img src="assets/report.png" alt="Report" />
-            <div class="card-body">
-              <h5 class="card-title">Maintenance Report</h5>
-              <p class="card-text">Generate detailed maintenance reports for equipment.</p>
-              <a routerLink="/maintenance" class="btn btn-primary w-100">See More</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
+<div class="container py-5" id="head">
+  <!-- Welcome Header with Fade-in Animation -->
+  <div class="welcome-header">
+    <h1 class="welcome-title">
+      <span class="wave-emoji">👋</span>
+      Welcome <span class="username-highlight">{{ username }}</span>
+    </h1>
+    <p class="role-badge">{{ roleType }}</p>
   </div>
-</body>
 
-</html>
+  <!-- HOSPITAL DASHBOARD -->
+  <div *ngIf="roleType == 'HOSPITAL'" class="dashboard-section">
+    <div class="row g-4 justify-content-center">
+      
+      <!-- Create New Hospital Card -->
+      <div class="col-md-4 card-wrapper">
+        <div class="custom-card hospital-card">
+          <div class="card-image-wrapper">
+            <img src="assets/hospital.png" alt="Hospital" class="card-image" />
+            <div class="card-overlay">
+              <div class="overlay-icon">🏥</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">
+              <span class="title-icon">🏗️</span>
+              Create New Hospital
+            </h5>
+            <p class="card-text">Let's build a better world together. Let's add a new hospital to our network.</p>
+            <a routerLink="/createhospital" class="btn-custom btn-hospital">
+              <span>Explore</span>
+              <i class="arrow">→</i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Request Equipment Card -->
+      <div class="col-md-4 card-wrapper">
+        <div class="custom-card equipment-card">
+          <div class="card-image-wrapper">
+            <img src="assets/equipment.png" alt="Equipment" class="card-image" />
+            <div class="card-overlay">
+              <div class="overlay-icon">🔧</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">
+              <span class="title-icon">📦</span>
+              Request Equipment
+            </h5>
+            <p class="card-text">Buckle Up! We are growing so let's get some new equipment for better care.</p>
+            <a routerLink="/requestequipment" class="btn-custom btn-equipment">
+              <span>Explore</span>
+              <i class="arrow">→</i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Schedule Maintenance Card -->
+      <div class="col-md-4 card-wrapper">
+        <div class="custom-card maintenance-card">
+          <div class="card-image-wrapper">
+            <img src="assets/maintenance.png" alt="Maintenance" class="card-image" />
+            <div class="card-overlay">
+              <div class="overlay-icon">⚙️</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">
+              <span class="title-icon">🔨</span>
+              Schedule Maintenance
+            </h5>
+            <p class="card-text">Fix the dysfunctional equipment by scheduling its maintenance promptly.</p>
+            <a routerLink="/schedule-maintenance" class="btn-custom btn-maintenance">
+              <span>Explore</span>
+              <i class="arrow">→</i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SUPPLIER DASHBOARD -->
+  <div *ngIf="roleType == 'SUPPLIER'" class="dashboard-section">
+    <div class="row justify-content-center">
+
+      <div class="col-md-4 card-wrapper">
+        <div class="custom-card supplier-card">
+          <div class="card-image-wrapper">
+            <img src="assets/orderreport.png" alt="Order Report" class="card-image" />
+            <div class="card-overlay">
+              <div class="overlay-icon">📊</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">
+              <span class="title-icon">📋</span>
+              Order Report
+            </h5>
+            <p class="card-text">Generate and manage order reports efficiently with our streamlined system.</p>
+            <a routerLink="/orders" class="btn-custom btn-supplier">
+              <span>Explore</span>
+              <i class="arrow">→</i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TECHNICIAN DASHBOARD -->
+  <div *ngIf="roleType == 'TECHNICIAN'" class="dashboard-section">
+    <div class="row justify-content-center">
+      
+      <div class="col-md-4 card-wrapper">
+        <div class="custom-card technician-card">
+          <div class="card-image-wrapper">
+            <img src="assets/report.png" alt="Maintenance Report" class="card-image" />
+            <div class="card-overlay">
+              <div class="overlay-icon">🔍</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">
+              <span class="title-icon">📈</span>
+              Maintenance Report
+            </h5>
+            <p class="card-text">Generate detailed maintenance reports for equipment with precision.</p>
+            <a routerLink="/maintenance" class="btn-custom btn-technician">
+              <span>Explore</span>
+              <i class="arrow">→</i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div>

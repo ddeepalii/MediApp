@@ -47,4 +47,8 @@ public class MaintenanceService {
         // Save the updated maintenance record
         return maintenanceRepository.save(updatedMaintenance);
     }
+
+    public void deleteMaintenance(Long id) {
+        maintenanceRepository.deleteById(id);
+    }
 }

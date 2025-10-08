@@ -1132,6 +1132,18 @@ body {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   overflow: hidden;
 }
+.success-message-custom {
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  color: white;
+  border-radius: 12px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  animation: bounceIn 0.6s ease-out;
+  box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+}
 
 .gradient-orb {
   position: absolute;

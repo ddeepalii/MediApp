@@ -1,4 +1,4 @@
-<div class="text-center mt-4">
+<!-- <div class="text-center mt-4">
   <h2 class="section-heading">Manage Maintenance</h2>
 </div>
 
@@ -54,7 +54,7 @@
   </div>
 </div>
 
-<!-- ✅ Edit Modal -->
+
 <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -87,6 +87,224 @@
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> -->
+
+<!-- Main Container with Wrapper -->
+<div class="maintenance-wrapper">
+  
+  <!-- Animated Header Section -->
+  <div class="text-center header-section">
+    <h2 class="section-heading">
+      <span class="heading-icon">🔧</span>
+      Manage Maintenance
+      <span class="heading-icon">⚙️</span>
+    </h2>
+    <div class="heading-underline"></div>
+  </div>
+
+  <!-- Success Alert with Animation -->
+  <!-- <div *ngIf="showMessage" class="alert-container">
+    <div class="alert alert-success-custom" role="alert">
+      <i class="fas fa-check-circle"></i>
+      {{ responseMessage }}
+    </div>
+  </div> -->
+
+  <!-- Maintenance Cards Grid -->
+  <div class="container cards-container">
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-4 card-item" 
+           *ngFor="let maintenance of maintenanceList; let i = index"
+           [style.animation-delay]="(i * 0.1) + 's'">
+        
+        <div class="maintenance-card">
+          <!-- Card Header with Gradient -->
+          <div class="card-header-custom">
+            <div class="header-content">
+              <i class="fas fa-wrench header-icon"></i>
+              <span class="maintenance-id">ID: {{ maintenance.id }}</span>
+            </div>
+            <div class="header-decoration"></div>
+          </div>
+
+          <!-- Card Body -->
+          <div class="card-body-custom">
+            <!-- Date Information -->
+            <div class="info-section date-section">
+              <div class="info-row">
+                <i class="fas fa-calendar-alt icon"></i>
+                <div class="info-content">
+                  <span class="info-label">Scheduled</span>
+                  <span class="info-value">{{ maintenance.scheduledDate | date: 'dd/MM/yyyy' }}</span>
+                </div>
+              </div>
+              <div class="info-row">
+                <i class="fas fa-calendar-check icon"></i>
+                <div class="info-content">
+                  <span class="info-label">Completed</span>
+                  <span class="info-value">{{ maintenance.completedDate | date: 'dd/MM/yyyy' }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Status Badge -->
+            <div class="status-section">
+              <span class="status-label">Status:</span>
+              <span class="status-badge" [ngStyle]="getStatusStyle(maintenance.status)">
+                <i class="fas fa-circle status-dot"></i>
+                {{ maintenance.status }}
+              </span>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Equipment Information -->
+            <div class="info-section equipment-section">
+              <h6 class="section-title">
+                <i class="fas fa-cogs"></i> Equipment Details
+              </h6>
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <span class="detail-label">ID:</span>
+                  <span class="detail-value">{{ maintenance.equipment.id }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Name:</span>
+                  <span class="detail-value">{{ maintenance.equipment.name }}</span>
+                </div>
+                <div class="detail-item full-width">
+                  <span class="detail-label">Description:</span>
+                  <span class="detail-value">{{ maintenance.equipment.description }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Hospital Information -->
+            <div class="info-section hospital-section">
+              <h6 class="section-title">
+                <i class="fas fa-hospital"></i> Hospital Details
+              </h6>
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <span class="detail-label">ID:</span>
+                  <span class="detail-value">{{ maintenance.equipment.hospital.id }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Name:</span>
+                  <span class="detail-value">{{ maintenance.equipment.hospital.name }}</span>
+                </div>
+                <div class="detail-item full-width">
+                  <span class="detail-label">Location:</span>
+                  <span class="detail-value">
+                    <i class="fas fa-map-marker-alt"></i>
+                    {{ maintenance.equipment.hospital.location }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+              <button class="btn-action btn-edit" 
+                      data-bs-toggle="modal" 
+                      data-bs-target="#editModal"
+                      (click)="edit(maintenance)" 
+                      [disabled]="maintenance.status === 'Serviced'">
+                <i class="fas fa-edit"></i>
+                <span>Edit</span>
+              </button>
+              <button class="btn-action btn-delete" 
+                      (click)="delete(maintenance)">
+                <i class="fas fa-trash-alt"></i>
+                <span>Delete</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Enhanced Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal-custom">
+      <form [formGroup]="itemForm" (ngSubmit)="update()">
+        
+        <!-- Modal Header -->
+        <div class="modal-header-custom">
+          <h5 class="modal-title-custom">
+            <i class="fas fa-edit"></i>
+            Edit Maintenance Record
+          </h5>
+          <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close" #closeBtn>
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body-custom">
+          <div class="form-group-custom">
+            <label class="form-label-custom">
+              <i class="fas fa-calendar-alt"></i>
+              Scheduled Date
+            </label>
+            <input type="date" 
+                   class="form-control-custom" 
+                   formControlName="scheduledDate" />
+          </div>
+
+          <div class="form-group-custom">
+            <label class="form-label-custom">
+              <i class="fas fa-calendar-check"></i>
+              Completed Date
+            </label>
+            <input type="date" 
+                   class="form-control-custom" 
+                   formControlName="completedDate" />
+          </div>
+
+          <div class="form-group-custom">
+            <label class="form-label-custom">
+              <i class="fas fa-align-left"></i>
+              Description
+            </label>
+            <textarea class="form-control-custom textarea-custom" 
+                      rows="3" 
+                      formControlName="description"
+                      placeholder="Enter maintenance description..."></textarea>
+          </div>
+
+          <div class="form-group-custom">
+            <label class="form-label-custom">
+              <i class="fas fa-info-circle"></i>
+              Status
+            </label>
+            <select class="form-control-custom select-custom" formControlName="status">
+              <option value="Scheduled">Scheduled</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Serviced">Serviced</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer-custom">
+          <button type="button" class="btn-modal btn-cancel" data-bs-dismiss="modal">
+            <i class="fas fa-times"></i>
+            Cancel
+          </button>
+          <button type="submit" class="btn-modal btn-update">
+            <i class="fas fa-save"></i>
+            Update Record
+          </button>
         </div>
       </form>
     </div>

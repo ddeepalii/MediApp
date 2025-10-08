@@ -1,7 +1,7 @@
-<div class="order-wrapper">
+<!-- <div class="order-wrapper">
 <div class="container mt-4">
   <div class="row">
-    <!-- <h2 class="mb-4 text-center">Manage Orders</h2> -->
+   
      <h2 class="section-heading">Manage Orders</h2>
 
 
@@ -32,21 +32,13 @@
           </ul>
 
           <div class="d-flex justify-content-between mt-3">
-            <!-- <button
-              class="btn btn-sm btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#driverModal"
-              (click)="edit(val)"
-              [disabled]="val.status === 'Delivered'">
-              <i class="bi bi-pencil-square"></i> Update
-            </button> -->
-            <!-- Update to In Transit -->
+            
             <button class="btn btn-sm btn-primary" (click)="updateOrderStatus('In Transit', val.id)"
               [disabled]="val.status === 'Delivered'">
               <i class="bi bi-pencil-square"></i> Mark In Transit
             </button>
 
-            <!-- Update to Delivered -->
+           
             <button class="btn btn-sm btn-success ms-2" (click)="updateOrderStatus('Delivered', val.id)"
               [disabled]="val.status === 'Delivered'">
               <i class="bi bi-truck"></i> Mark Delivered
@@ -60,4 +52,114 @@
     </div>
   </div>
 </div>
+</div> -->
+
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
+<div class="order-wrapper">
+  <div class="background-pattern"></div>
+  
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="section-heading">
+          <span class="heading-icon">📦</span>
+          Manage Orders
+          <div class="heading-underline"></div>
+        </h2>
+      </div>
+
+      <div *ngFor="let val of orderList; let i = index" 
+           class="col-md-6 col-lg-4 mb-4 order-card-wrapper"
+           [style.animation-delay]="i * 0.1 + 's'">
+        
+        <div class="card order-card">
+          <div class="card-header">
+            <div class="order-number">
+              <i class="bi bi-receipt"></i>
+              Order #{{ val.id }}
+            </div>
+            <span class="status-badge" [ngClass]="'status-' + val.status.toLowerCase().replace(' ', '-')">
+              <span class="status-dot"></span>
+              {{ val.status }}
+            </span>
+          </div>
+
+          <div class="card-body">
+            <div class="info-section">
+              <div class="info-item">
+                <i class="bi bi-calendar-event info-icon"></i>
+                <div class="info-content">
+                  <span class="info-label">Order Date</span>
+                  <span class="info-value">{{ val.orderDate | date: "dd-MMM-yyyy" }}</span>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <i class="bi bi-box-seam info-icon"></i>
+                <div class="info-content">
+                  <span class="info-label">Quantity</span>
+                  <span class="info-value">{{ val.quantity }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="details-section">
+              <div class="detail-block equipment-block">
+                <div class="detail-header">
+                  <i class="bi bi-tools"></i>
+                  <span>Equipment Details</span>
+                </div>
+                <ul class="detail-list">
+                  <li><strong>ID:</strong> {{ val.equipment.id }}</li>
+                  <li><strong>Name:</strong> {{ val.equipment.name }}</li>
+                  <li><strong>Description:</strong> {{ val.equipment.description }}</li>
+                </ul>
+              </div>
+
+              <div class="detail-block hospital-block">
+                <div class="detail-header">
+                  <i class="bi bi-hospital"></i>
+                  <span>Hospital Details</span>
+                </div>
+                <ul class="detail-list">
+                  <li><strong>ID:</strong> {{ val.equipment.hospital.id }}</li>
+                  <li><strong>Name:</strong> {{ val.equipment.hospital.name }}</li>
+                  <li><strong>Location:</strong> {{ val.equipment.hospital.location }}</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="action-buttons">
+              <button class="btn btn-transit" 
+                      (click)="updateOrderStatus('In Transit', val.id)"
+                      [disabled]="val.status === 'Delivered'">
+                      <i class="fas fa-shipping-fast"></i>
+              </button>
+
+              <button class="btn btn-delivered" 
+                      (click)="updateOrderStatus('Delivered', val.id)"
+                      [disabled]="val.status === 'Delivered'">
+               <i class="fas fa-check-circle"></i>
+                <!-- <span>Delivered</span> -->
+              </button>
+
+              <button class="btn btn-delete" 
+                      (click)="delete(val.id)">
+                      <i class="fas fa-trash"></i>
+                <!-- <span>Delete</span> -->
+              </button>
+            </div>
+          </div>
+
+          <div class="card-shine"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
