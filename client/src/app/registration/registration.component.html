@@ -96,58 +96,26 @@
                 </div>
               </div>
 
-              <!-- Password -->
-              <div class="form-group mb-3">
-                <label for="password" class="form-label">
-                  <i class="fas fa-lock me-2"></i>Password
-                </label>
-                <div class="input-wrapper">
-                  <input 
-                    type="password" 
-                    class="form-control" 
-                    id="password"
-                    name="password" 
-                    formControlName="password"
-                    placeholder="Enter your password" 
-                    (input)="checkPasswordStrength()" />
-                  <span class="input-icon"><i class="fas fa-lock"></i></span>
-                </div>
-
-                <!-- Password Strength Indicator -->
-                <div *ngIf="itemForm.get('password')?.dirty || itemForm.get('password')?.touched" class="password-strength-container mt-2">
-                  <ul class="password-rules">
-                    <li [class.valid]="hasLowercase" [class.invalid]="!hasLowercase">
-                      <span class="check-icon">
-                        <i class="fas" [ngClass]="hasLowercase ? 'fa-check-circle' : 'fa-times-circle'"></i>
-                      </span>
-                      <span class="rule-text">At least one lowercase letter [a-z]</span>
-                    </li>
-                    <li [class.valid]="hasUppercase" [class.invalid]="!hasUppercase">
-                      <span class="check-icon">
-                        <i class="fas" [ngClass]="hasUppercase ? 'fa-check-circle' : 'fa-times-circle'"></i>
-                      </span>
-                      <span class="rule-text">At least one uppercase letter [A-Z]</span>
-                    </li>
-                    <li [class.valid]="hasDigit" [class.invalid]="!hasDigit">
-                      <span class="check-icon">
-                        <i class="fas" [ngClass]="hasDigit ? 'fa-check-circle' : 'fa-times-circle'"></i>
-                      </span>
-                      <span class="rule-text">At least one digit [0-9]</span>
-                    </li>
-                    <li [class.valid]="hasSpecialChar" [class.invalid]="!hasSpecialChar">
-                      <span class="check-icon">
-                        <i class="fas" [ngClass]="hasSpecialChar ? 'fa-check-circle' : 'fa-times-circle'"></i>
-                      </span>
-                      <span class="rule-text">At least one special character [$.#!%*?&^]</span>
-                    </li>
-                    <li [class.valid]="hasMinLength" [class.invalid]="!hasMinLength">
-                      <span class="check-icon">
-                        <i class="fas" [ngClass]="hasMinLength ? 'fa-check-circle' : 'fa-times-circle'"></i>
-                      </span>
-                      <span class="rule-text">Minimum 8 characters</span>
-                    </li>
-                  </ul>
-                </div>
+              <!-- Password Requirements -->
+              <div *ngIf="itemForm.get('password')?.dirty || itemForm.get('password')?.touched" class="mt-2">
+                <ul class="password-rules">
+                  <li [class.valid]="hasLowercase" [class.invalid]="!hasLowercase">
+                    <span>{{ hasLowercase ? '✅' : '❌' }}</span> At least one lowercase letter [a-z]
+                  </li>
+                  <li [class.valid]="hasUppercase" [class.invalid]="!hasUppercase">
+                    <span>{{ hasUppercase ? '✅' : '❌' }}</span> At least one uppercase letter [A-Z]
+                  </li>
+                  <li [class.valid]="hasDigit" [class.invalid]="!hasDigit">
+                    <span>{{ hasDigit ? '✅' : '❌' }}</span> At least one digit [0-9]
+                  </li>
+                  <li [class.valid]="hasSpecialChar" [class.invalid]="!hasSpecialChar">
+                    <span>{{ hasSpecialChar ? '✅' : '❌' }}</span> At least one special character [&#64; $. # ! % * ? &
+                    ^]
+                  </li>
+                  <li [class.valid]="hasMinLength" [class.invalid]="!hasMinLength">
+                    <span>{{ hasMinLength ? '✅' : '❌' }}</span> Minimum 8 characters
+                  </li>
+                </ul>
               </div>
 
               <!-- Confirm Password -->
@@ -196,27 +164,36 @@
                 </div>
               </div>
 
-              <!-- Submit Button -->
-              <button 
-                type="submit" 
-                class="btn btn-primary btn-submit w-100 mb-3" 
-                [disabled]="itemForm.invalid">
-                <span class="btn-text">
-                  <i class="fas fa-user-plus me-2"></i>Create Account
-                </span>
-                <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
-              </button>
-            </form>
-
-            <!-- Login Link -->
-            <div class="text-center mt-3">
-              <p class="mb-0">
-                Already have an account?
-                <a [routerLink]="['/login']" class="login-link">
-                  <i class="fas fa-sign-in-alt me-1"></i>Login
-                </a>
-              </p>
+            <!-- Custom CAPTCHA -->
+            <div class="mb-3">
+              <label class="form-label">CAPTCHA</label>
+              <div class="d-flex align-items-center">
+                <span class="bg-light border px-3 py-2 me-2">{{ captchaCode }}</span>
+                <button type="button" class="btn btn-outline-secondary btn-sm" (click)="generateCaptcha()">↻</button>
+              </div>
+              <input type="text" class="form-control mt-2" formControlName="captchaInput"
+                placeholder="Enter the CAPTCHA code" />
+              <div
+                *ngIf="itemForm.get('captchaInput')?.invalid && (itemForm.get('captchaInput')?.dirty || itemForm.get('captchaInput')?.touched)"
+                class="text-danger mt-1">
+                *Please enter the CAPTCHA code.
+              </div>
             </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary w-100 mb-3" [disabled]="itemForm.invalid">
+              Submit
+            </button>
+          </form>
+
+          <!-- Outside the form -->
+
+          <p class="text-center">
+            Already have an account?
+            <a [routerLink]="['/login']" class="text-decoration-none text-primary fw-bold">
+              Login
+            </a>
+          </p>
 
             <!-- Success/Error Messages -->
             <div *ngIf="showMessage" class="alert alert-success alert-animated mt-3" role="alert">
