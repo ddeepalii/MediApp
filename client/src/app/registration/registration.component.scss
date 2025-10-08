@@ -6,9 +6,10 @@
 
 /* Glassmorphism card */
 .bg-glass {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(10px);
   border-radius: 12px;
+  padding: 2rem;
 }
 
 /* Input styles */
@@ -23,7 +24,7 @@
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-/* Login button */
+/* Primary button */
 .btn-primary {
   background-color: #007bff;
   border: none;
@@ -42,7 +43,7 @@
 
 /* Headings */
 h1 {
-  font-size: 3rem;
+  font-size: 2.8rem;
   color: white;
   text-shadow: 0 0 6px #1a73e8;
 }
@@ -51,10 +52,37 @@ h1 {
   color: #e1efff;
 }
 
-/* Responsive center alignment */
+/* Image styling */
+.custom-img {
+  max-width: 80%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Password rules list */
+.password-rules {
+  list-style: none;
+  padding-left: 0;
+}
+
+.password-rules li {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.password-rules .valid {
+  color: green;
+}
+
+.password-rules .invalid {
+  color: red;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .display-4 {
-    font-size: 2.2rem;
+  h1 {
+    font-size: 2rem;
   }
 
   .lead {
@@ -63,5 +91,10 @@ h1 {
 
   .bg-glass {
     padding: 1.5rem;
+  }
+
+  .custom-img {
+    max-width: 100%;
+    margin-bottom: 1rem;
   }
 }
