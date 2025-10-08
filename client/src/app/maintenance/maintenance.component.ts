@@ -129,7 +129,34 @@ export class MaintenanceComponent implements OnInit {
     }
   }
 
-  delete(maintenance: any): void {  
-    console.log('Delete clicked for maintenance ID:', maintenance.id);
+  delete(maintenance: any): void {
+    // Optional: Add confirmation dialog
+    if (confirm('Are you sure you want to delete this maintenance record?')) {
+      this.httpService.deleteMaintenance(maintenance.id).subscribe({
+        next: () => {
+          // Refresh the maintenance list after successful deletion
+          this.getMaintenance();
+          
+          // Show success message
+          // this.responseMessage = 'Maintenance deleted successfully!';
+          this.showMessage = true;
+          
+          // Hide message after 3 seconds
+          setTimeout(() => {
+            this.showMessage = false;
+          }, 3000);
+        },
+        error: (error) => {
+          this.showError = true;
+          this.errorMessage = 'An error occurred while deleting maintenance.';
+          console.error('Delete error:', error);
+          
+          // Hide error message after 3 seconds
+          setTimeout(() => {
+            this.showError = false;
+          }, 3000);
+        }
+      });
+    }
   }
 }

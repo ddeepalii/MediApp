@@ -1,187 +1,3 @@
-<!-- Main Container
- 
-<link
-rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-/>
-<div class="container-fluid py-4">
-  <div class="container">
-
-   
-    <div class="text-center mb-4">
-      <h2 class="fw-bold">Hospital Management</h2>
-    </div>
-
-    
-    <div class="card shadow mb-5">
-      <div class="card-header fw-bold">Add Hospital</div>
-      <div class="card-body">
-        <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" class="animate__animated animate__fadeIn">
-
-          <div class="mb-3">
-            <label class="form-label fw-bold">Hospital Name</label>
-            <input formControlName="name" type="text" class="form-control" placeholder="Name of Hospital" />
-            <div *ngIf="itemForm.get('name')?.invalid && (itemForm.get('name')?.dirty || itemForm.get('name')?.touched)"
-              class="text-danger fw-bold mt-1">*Please Enter name</div>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label fw-bold">Hospital Location</label>
-            <input formControlName="location" type="text" class="form-control" placeholder="Location of Hospital" />
-            <div
-              *ngIf="itemForm.get('location')?.invalid && (itemForm.get('location')?.dirty || itemForm.get('location')?.touched)"
-              class="text-danger fw-bold mt-1">*Please Enter location</div>
-          </div>
-
-          <button class="btn btn-primary" [disabled]="itemForm.invalid">Submit</button>
-
-          <div *ngIf="showMessage" class="alert alert-success mt-4">{{ responseMessage }}</div>
-          <div *ngIf="showError" class="alert alert-danger mt-4">{{ errorMessage }}</div>
-
-        </form>
-      </div>
-    </div>
-
-    
-    <div class="card shadow mb-5">
-      <div class="card-header fw-bold">Hospital Information</div>
-      <div class="card-body">
-        <div class="row g-3">
-          <div class="col-md-6 col-lg-4" *ngFor="let hospital of hospitalList; let i = index" [style.animation-delay]="i * 0.15 + 's'">
-            <div class="card hospital-card h-100">
-              <div class="card-body">
-                <h5 class="card-title text-dark fw-bold">
-                  <i class="fas fa-hospital"></i> {{ hospital.name }}
-                </h5>
-                <p class="card-text text-secondary mb-2">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <span><strong>Location:</strong> {{ hospital.location }}</span>
-                </p>
-                <p class="card-text text-secondary mb-2">
-                  <i class="fas fa-id-badge"></i>
-                  <span><strong>ID:</strong> {{ hospital.id }}</span>
-                </p>
-
-               
-                <div class="mt-3 d-flex flex-wrap gap-2">
-                  <button class="btn btn-secondary btn-sm" (click)="Addequipment(hospital)" data-bs-toggle="modal"
-                    data-bs-target="#driverModal">
-                    <i class="fas fa-tools"></i> 
-                  </button>
-                  <button class="btn btn-primary btn-sm" (click)="editHospital(hospital)">
-                    <i class="fas fa-pencil-alt"></i> 
-                  </button>
-                  <button class="btn btn-danger btn-sm" (click)="deleteHospital(hospital.id)">
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  
-    <div class="modal-body">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search Hospital Name or Location or ID"
-          [(ngModel)]="modalSearchQuery" (keyup.enter)="filterHospital()" />
-        <button class="btn btn-primary" type="button" (click)="filterHospital()">Search</button>
-        <button class="btn btn-secondary ms-2" type="button" (click)="closeIt()">Clear</button>
-      </div>
-
-    
-      <div *ngIf="isClick !== true" class="alert alert-warning p-2">{{ NotFoundMessage }}</div>
-      <div *ngIf="isClick === true" class="alert alert-success p-2">{{ FoundMessage }}</div>
-
-
-      <div *ngIf="showHospitalfilterData && isClick === true">
-        <div class="row g-3">
-          <div class="col-md-6 col-lg-4" *ngFor="let hospital of filteredHospitalList; let i = index" [style.animation-delay]="i * 0.15 + 's'">
-            <div class="card hospital-card h-100">
-              <div class="card-body">
-                <h5 class="card-title text-dark fw-bold">
-                  <i class="fas fa-hospital"></i> {{ hospital.name }}
-                </h5>
-                <p class="card-text text-secondary mb-2">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <span><strong>Location:</strong> {{ hospital.location }}</span>
-                </p>
-                <p class="card-text text-secondary mb-2">
-                  <i class="fas fa-id-badge"></i>
-                  <span><strong>ID:</strong> {{ hospital.id }}</span>
-                </p>
-
-               
-                <div class="mt-3 d-flex flex-wrap gap-2">
-                  <button class="btn btn-secondary btn-sm" (click)="Addequipment(hospital)" data-bs-toggle="modal"
-                    data-bs-target="#driverModal">
-                    <i class="fas fa-tools"></i> Assign Equipment
-                  </button>
-                  <button class="btn btn-primary btn-sm" (click)="editHospital(hospital)">
-                    <i class="fas fa-pencil-alt"></i> Update
-                  </button>
-                  <button class="btn btn-danger btn-sm" (click)="deleteHospital(hospital.id)">
-                    <i class="fas fa-trash-alt"></i> Delete
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-   
-    <div class="modal fade" id="driverModal" tabindex="-1" aria-labelledby="driverModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-
-          <div class="modal-header">
-            <h5 class="modal-title" id="driverModalLabel">Assign Equipment</h5>
-          </div>
-
-         
-          <div class="modal-body">
-            <form [formGroup]="equipmentForm" (ngSubmit)="submitEquipment()"
-              class="animate__animated animate__fadeIn">
-              <input type="hidden" formControlName="hospitalId" />
-
-              <div class="mb-3">
-                <label class="form-label fw-bold">Equipment Name</label>
-                <input type="text" class="form-control" formControlName="name" placeholder="Equipment Name" />
-                <div
-                  *ngIf="equipmentForm.get('name')?.invalid && (equipmentForm.get('name')?.dirty || equipmentForm.get('name')?.touched)"
-                  class="text-danger fw-bold mt-1">*Please Enter name</div>
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label fw-bold">Description</label>
-                <input type="text" class="form-control" formControlName="description" placeholder="Description" />
-                <div
-                  *ngIf="equipmentForm.get('description')?.invalid && (equipmentForm.get('description')?.dirty || equipmentForm.get('description')?.touched)"
-                  class="text-danger fw-bold mt-1">*Please Enter description</div>
-              </div>
-
-              <div *ngIf="showMessage" class="alert alert-success mt-3">{{ responseMessage }}</div>
-              <div *ngIf="showError" class="alert alert-danger mt-3">{{ errorMessage }}</div>
-
-              <div class="modal-footer px-0">
-                <button type="submit" class="btn btn-primary" [disabled]="equipmentForm.invalid">Save</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              </div>
-            </form>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div> -->
-
-<!-- Main Container -->
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -211,7 +27,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         <span>Add New Hospital</span>
       </div>
       <div class="card-body-custom">
-        <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" class="hospital-form">
+        <!-- <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" class="hospital-form">
           
           <div class="form-group-custom">
             <label class="form-label-custom">
@@ -271,8 +87,19 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
             {{ errorMessage }}
           </div>
 
-        </form>
-      </div>
+        </form> -->
+        <div class="card-body-custom" style="display: flex; justify-content: center;">
+          <button
+            class="btn-submit"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#addHospitalModal"
+            
+          >
+            <span class="btn-text">{{ editingHospitalId ? 'Update Hospital' : 'Add New Hospital' }}</span>
+            <i class="fas fa-arrow-right btn-icon"></i>
+          </button>
+        </div>
     </div>
 
     <!-- Search Section -->
@@ -354,7 +181,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
                   <i class="fas fa-tools"></i>
                   <span>Equipment</span>
                 </button>
-                <button class="action-btn btn-edit" (click)="editHospital(hospital)">
+                <button class="action-btn btn-edit" (click)="editHospital(hospital)" data-bs-toggle="modal" data-bs-target="#editHospitalModal">
                   <i class="fas fa-pencil-alt"></i>
                   <span>Edit</span>
                 </button>
@@ -416,7 +243,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
                   <i class="fas fa-tools"></i>
                   <span>Equipment</span>
                 </button>
-                <button class="action-btn btn-edit" (click)="editHospital(hospital)">
+                <button class="action-btn btn-edit" (click)="editHospital(hospital)" data-bs-toggle="modal" data-bs-target="#editHospitalModal">
                   <i class="fas fa-pencil-alt"></i>
                   <span>Edit</span>
                 </button>
@@ -431,6 +258,91 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- Add Hospital Modal -->
+<div class="modal fade" id="addHospitalModal" tabindex="-1" aria-labelledby="addHospitalModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal-custom">
+      <div class="modal-header-custom">
+        <h5 class="modal-title-custom" id="addHospitalModalLabel">
+          <i class="fas fa-hospital"></i>
+          {{ editingHospitalId ? 'Update Hospital' : 'Add New Hospital' }}
+        </h5>
+        <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body-custom">
+        <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" class="hospital-form">
+          <div class="form-group-custom">
+            <label class="form-label-custom">
+              <i class="fas fa-hospital"></i>
+              Hospital Name
+            </label>
+            <div class="input-wrapper">
+              <input
+                formControlName="name"
+                type="text"
+                class="form-input-custom"
+                placeholder="Enter Hospital Name"
+              />
+              <span class="input-border"></span>
+            </div>
+            <div
+              *ngIf="itemForm.get('name')?.invalid && (itemForm.get('name')?.dirty || itemForm.get('name')?.touched)"
+              class="error-message">
+              <i class="fas fa-exclamation-circle"></i>
+              Please enter hospital name
+            </div>
+ </div>
+
+          <div class="form-group-custom">
+            <label class="form-label-custom">
+              <i class="fas fa-map-marker-alt"></i>
+              Hospital Location
+            </label>
+            <div class="input-wrapper">
+              <input
+                formControlName="location"
+                type="text"
+                class="form-input-custom"
+                placeholder="Enter Hospital Location"
+              />
+              <span class="input-border"></span>
+            </div>
+            <div
+              *ngIf="itemForm.get('location')?.invalid && (itemForm.get('location')?.dirty || itemForm.get('location')?.touched)"
+              class="error-message">
+              <i class="fas fa-exclamation-circle"></i>
+              Please enter hospital location
+            </div>
+          </div>
+
+          <div *ngIf="showMessage" class="alert-custom alert-success">
+            <i class="fas fa-check-circle"></i>
+            {{ responseMessage }}
+          </div>
+          <div *ngIf="showError" class="alert-custom alert-error">
+            <i class="fas fa-times-circle"></i>
+            {{ errorMessage }}
+          </div>
+
+          <div class="modal-footer-custom">
+            <button type="submit" class="btn-modal-submit" [disabled]="itemForm.invalid">
+              <i class="fas fa-save"></i>
+              {{ editingHospitalId ? 'Update Hospital' : 'Save Hospital' }}
+            </button>
+            <button type="button" class="btn-modal-close" data-bs-dismiss="modal">
+              <i class="fas fa-times"></i>
+              Close
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -509,6 +421,90 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
             <button type="submit" class="btn-modal-submit" [disabled]="equipmentForm.invalid">
               <i class="fas fa-save"></i>
               Save Equipment
+            </button>
+            <button type="button" class="btn-modal-close" data-bs-dismiss="modal">
+              <i class="fas fa-times"></i>
+              Close
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Hospital Modal (separate, like Equipment) -->
+<div class="modal fade" id="editHospitalModal" tabindex="-1" aria-labelledby="editHospitalModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal-custom">
+      <div class="modal-header-custom">
+        <h5 class="modal-title-custom" id="editHospitalModalLabel">
+          <i class="fas fa-pencil-alt"></i>
+          Edit Hospital
+        </h5>
+        <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body-custom">
+        <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" class="hospital-form">
+          <div class="form-group-custom">
+            <label class="form-label-custom">
+              <i class="fas fa-hospital"></i>
+              Hospital Name
+            </label>
+            <div class="input-wrapper">
+              <input
+                formControlName="name"
+                type="text"
+                class="form-input-custom"
+                placeholder="Enter Hospital Name"
+              />
+              <span class="input-border"></span>
+            </div>
+            <div
+              *ngIf="itemForm.get('name')?.invalid && (itemForm.get('name')?.dirty || itemForm.get('name')?.touched)"
+              class="error-message">
+              <i class="fas fa-exclamation-circle"></i>
+              Please enter hospital name
+            </div>
+          </div>
+
+          <div class="form-group-custom">
+            <label class="form-label-custom">
+              <i class="fas fa-map-marker-alt"></i>
+              Hospital Location
+            </label>
+            <div class="input-wrapper">
+              <input
+                formControlName="location"
+                type="text"
+                class="form-input-custom"
+                placeholder="Enter Hospital Location"
+              />
+              <span class="input-border"></span>
+            </div>
+            <div
+              *ngIf="itemForm.get('location')?.invalid && (itemForm.get('location')?.dirty || itemForm.get('location')?.touched)"
+              class="error-message">
+              <i class="fas fa-exclamation-circle"></i>
+              Please enter hospital location
+            </div>
+          </div>
+
+          <div *ngIf="showMessage" class="alert-custom alert-success">
+            <i class="fas fa-check-circle"></i>
+            {{ responseMessage }}
+          </div>
+          <div *ngIf="showError" class="alert-custom alert-error">
+            <i class="fas fa-times-circle"></i>
+            {{ errorMessage }}
+          </div>
+
+          <div class="modal-footer-custom">
+            <button type="submit" class="btn-modal-submit" [disabled]="itemForm.invalid">
+              <i class="fas fa-save"></i>
+              Update Hospital
             </button>
             <button type="button" class="btn-modal-close" data-bs-dismiss="modal">
               <i class="fas fa-times"></i>

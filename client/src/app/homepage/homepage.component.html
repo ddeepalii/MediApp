@@ -1,102 +1,191 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MediSphere</title>
+<!-- Sticky Navbar -->
+<!-- <nav class="navbar navbar-expand-lg navbar-dark fixed-top" [class.scrolled]="isScrolled">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">
+      <i class="fas fa-heartbeat me-2"></i>MediSphere
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#features" (click)="smoothScroll($event, 'features')">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#testimonials" (click)="smoothScroll($event, 'testimonials')">Testimonials</a>
+        </li>
+        <li class="nav-item">
+          <button class="btn btn-light btn-sm ms-3" (click)="goToLogin()">
+            Get Started <i class="fas fa-arrow-right ms-2"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav> -->
 
-  <!-- Bootstrap CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
-  <!-- Custom CSS -->
-</head>
-<body>
-
-
-  <!-- HERO SECTION -->
-  <header class="hero-section d-flex align-items-center text-white text-center text-md-start">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-6">
-          <h1 class="display-4 fw-bold mb-3">Revolutionizing Equipment Management Across Healthcare</h1>
-          <p class="lead mb-4">
-            Streamline your hospital's workflow. Track, maintain, and allocate medical equipment across departments efficiently.
-          </p>
-          <a href="/login" class="btn btn-lg btn-light fw-bold">Get Started</a>
-        </div>
-        <div class="col-md-6 text-center">
-          <!-- <img src="assets/bannerimg.jpg" alt="Medical Equipment" class="img-fluid hero-img animate__animated animate__fadeInRight" /> -->
+<!-- HERO SECTION -->
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+<section class="hero-section" id="hero">
+  <!-- Animated Background Particles -->
+  <div class="particles">
+    <div class="particle" *ngFor="let particle of particles" [style.left.%]="particle.x" [style.top.%]="particle.y" [style.animation-delay.s]="particle.delay"></div>
+  </div>
+  
+  <!-- Gradient Overlay -->
+  <div class="hero-gradient-overlay"></div>
+  
+  <!-- Hero Content -->
+  <div class="container hero-content">
+    <div class="row align-items-center justify-content-center text-center">
+      <div class="col-lg-10">
+        <!-- Animated Title with Typewriter Effect -->
+        <h1 class="hero-title mb-4" [class.visible]="heroVisible">
+          <span class="typewriter">{{ displayedText }}</span>
+          <!-- <span class="cursor" [class.blink]="typingComplete">|</span> -->
+        </h1>
+        
+        <!-- Subtitle -->
+        <p class="hero-subtitle mb-5" [class.visible]="heroVisible">
+          Streamline your hospital's workflow. Track, maintain, and allocate medical equipment across departments efficiently.
+        </p>
+        
+        <!-- CTA Button with Ripple Effect -->
+        <button class="btn btn-hero btn-lg" (click)="goToLogin()" [class.visible]="heroVisible">
+          <span class="btn-text">Get Started</span>
+          <i class="fas fa-arrow-right btn-icon"></i>
+          <div class="ripple" *ngIf="showRipple" [@ripple]></div>
+        </button>
+        
+        <!-- Social Proof Badge -->
+        <div class="social-proof mt-5" [class.visible]="heroVisible">
+          <i class="fas fa-check-circle me-2"></i>
+          <span>Trusted by 1000+ hospitals worldwide</span>
         </div>
       </div>
     </div>
-  </header>
+  </div>
+  
+  <!-- Scroll Indicator -->
+  <!-- <div class="scroll-indicator" (click)="smoothScroll($event, 'features')">
+    <div class="mouse">
+      <div class="wheel"></div>
+    </div>
+    <div class="arrow-down">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div> -->
+</section>
 
-  <!-- FEATURES SECTION -->
-  <section id="features" class="features-section py-5">
-    <div class="container">
-      <h2 class="text-center mb-5">What MediSphere Offers</h2>
-      <div class="row g-4 text-center">
-        <div class="col-md-4">
-          <div class="card h-100 shadow border-0">
-            <div class="card-body">
-              <div class="feature-icon mb-3">🛠️</div>
-              <h5 class="card-title">Maintenance Scheduling</h5>
-              <p class="card-text">Automate inspections and routine checks. Get notified before breakdowns happen.</p>
+<!-- FEATURES SECTION -->
+<section id="features" class="features-section py-5">
+  <!-- Animated Background -->
+  <div class="features-bg">
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
+  </div>
+  
+  <div class="container position-relative">
+    <!-- Section Title -->
+    <div class="section-header text-center mb-5" [class.visible]="featuresVisible">
+      <h2 class="section-title">What MediSphere Offers</h2>
+      <div class="title-underline"></div>
+      <p class="section-subtitle mt-3">Cutting-edge solutions for modern healthcare management</p>
+    </div>
+    
+    <!-- Feature Cards with 3D Tilt Effect -->
+    <div class="row g-4">
+      <div class="col-md-4" *ngFor="let feature of features; let i = index" 
+           [attr.data-aos]="'fade-up'" 
+           [attr.data-aos-delay]="i * 200">
+        <div class="feature-card" 
+             (mouseenter)="onCardHover($event)" 
+             (mousemove)="onCardMove($event)"
+             (mouseleave)="onCardLeave($event)">
+          <div class="feature-glow"></div>
+          <div class="feature-card-inner">
+            <div class="feature-icon-wrapper mb-4">
+              <div class="feature-icon-bg"></div>
+              <i [class]="feature.icon" class="feature-icon"></i>
             </div>
+            <h5 class="feature-title mb-3">{{ feature.title }}</h5>
+            <p class="feature-text">{{ feature.description }}</p>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card h-100 shadow border-0">
-            <div class="card-body">
-              <div class="feature-icon mb-3">📦</div>
-              <h5 class="card-title">Supplier Integration</h5>
-              <p class="card-text">Real-time access to suppliers, spare parts inventory, and transparent procurement process.</p>
-            </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS SECTION -->
+<section id="testimonials" class="testimonials-section py-5">
+  <div class="container">
+    <!-- Section Title -->
+    <div class="section-header text-center mb-5" [class.visible]="testimonialsVisible">
+      <h2 class="section-title">What People Say</h2>
+      <div class="title-underline"></div>
+      <p class="section-subtitle mt-3">Hear from our satisfied healthcare professionals</p>
+    </div>
+    
+    <!-- Testimonial Cards -->
+    <div class="row g-4">
+      <div class="col-md-4" *ngFor="let testimonial of testimonials; let i = index"
+           [attr.data-aos]="'flip-left'"
+           [attr.data-aos-delay]="i * 150">
+        <div class="testimonial-card">
+          <div class="quote-mark">
+            <i class="fas fa-quote-left"></i>
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card h-100 shadow border-0">
-            <div class="card-body">
-              <div class="feature-icon mb-3">🏥</div>
-              <h5 class="card-title">Hospital Coordination</h5>
-              <p class="card-text">Seamless collaboration between departments, branches, and healthcare teams across regions.</p>
+          
+          <div class="testimonial-content">
+            <p class="testimonial-text">"{{ testimonial.text }}"</p>
+            
+            <!-- Star Rating -->
+            <div class="star-rating mb-3">
+              <i class="fas fa-star" *ngFor="let star of [1,2,3,4,5]"></i>
+            </div>
+            
+            <!-- Profile -->
+            <div class="testimonial-profile">
+              <div class="profile-avatar">
+                <i [class]="testimonial.avatarIcon"></i>
+              </div>
+              <div class="profile-info">
+                <h6 class="profile-name mb-0">{{ testimonial.name }}</h6>
+                <p class="profile-role mb-0">{{ testimonial.role }}</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- TESTIMONIALS SECTION -->
-  <section id="testimonials" class="testimonial-section bg-light py-5">
-    <div class="container">
-      <h2 class="text-center mb-5">What People Say</h2>
-      <div class="row g-4 text-center">
-        <div class="col-md-4">
-          <blockquote class="blockquote">
-            <p>"MediSphere has transformed how we manage our hospital's equipment. It's efficient and intuitive."</p>
-            <footer class="blockquote-footer mt-2">Dr. Maya Thomas</footer>
-          </blockquote>
-        </div>
-        <div class="col-md-4">
-          <blockquote class="blockquote">
-            <p>"Maintenance scheduling is now effortless and highly accurate. We’ve reduced downtime by 40%!"</p>
-            <footer class="blockquote-footer mt-2">Ramesh Iyer, Technician</footer>
-          </blockquote>
-        </div>
-        <div class="col-md-4">
-          <blockquote class="blockquote">
-            <p>"The supplier integration is a complete game-changer. Procurement has never been easier."</p>
-            <footer class="blockquote-footer mt-2">Sneha Kapoor, Supplier</footer>
-          </blockquote>
-        </div>
+<!-- FOOTER -->
+<!-- <footer class="footer py-4">
+  <div class="container text-center">
+    <div class="footer-content">
+      <div class="footer-logo mb-3">
+        <i class="fas fa-heartbeat me-2"></i>
+        <span class="fw-bold">MediSphere</span>
       </div>
+      <p class="footer-text mb-3">
+        Revolutionizing Equipment Management Across Healthcare
+      </p>
+      <div class="footer-social">
+        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+      </div>
+      <p class="copyright mt-3 mb-0">
+        &copy; 2025 MediSphere. All rights reserved.
+      </p>
     </div>
-  </section>
-
-
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+  </div>
+</footer> -->

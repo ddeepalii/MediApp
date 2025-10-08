@@ -180,6 +180,7 @@ export class CreatehospitalComponent implements OnInit, OnDestroy {
     this.showMessage = false;
   }
 
+  
   submitEquipment() {
     if (this.equipmentForm.valid) {
       this.httpService
@@ -206,6 +207,7 @@ export class CreatehospitalComponent implements OnInit, OnDestroy {
       name: hospital.name,
       location: hospital.location
     });
+    
     this.editingHospitalId = hospital.id;
     this.clearMessages();
   }

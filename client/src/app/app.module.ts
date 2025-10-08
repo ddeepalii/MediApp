@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { RegistrationComponent } from './registration/registration.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -47,14 +47,16 @@ import { FooterComponent } from './footer/footer.component';
       ContactComponent,
       PrivacyComponent,
       NavbarComponent,
-      FooterComponent
+      FooterComponent,
+      
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule 
+    HttpClientModule ,
+    BrowserAnimationsModule
   ],
   providers:  [HttpService,HttpClientModule ], 
               

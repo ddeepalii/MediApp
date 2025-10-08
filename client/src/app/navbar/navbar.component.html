@@ -1,7 +1,9 @@
-<nav class="navbar navbar-expand-lg navbar-dark custom-navbar px-3 py-2 shadow-sm">
-  <a class="navbar-brand fw-bold fs-4" href="#">MediSphere</a>
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar px-3 py-2 shadow-lg">
+  <a class="navbar-brand fw-bold fs-4 brand-logo" href="#">
+    <span class="brand-text">MediSphere</span>
+  </a>
 
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+  <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -10,38 +12,58 @@
     <!-- Left-aligned Nav Items -->
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item" *ngIf="roleName === 'HOSPITAL'">
-        <a class="nav-link" [routerLink]="['/createhospital']">Create Hospital</a>
+        <a class="nav-link animated-link" [routerLink]="['/createhospital']">
+          <span class="link-text">Create Hospital</span>
+        </a>
       </li>
       <li class="nav-item" *ngIf="roleName === 'HOSPITAL'">
-        <a class="nav-link" [routerLink]="['/requestequipment']">Request Equipment</a>
+        <a class="nav-link animated-link" [routerLink]="['/requestequipment']">
+          <span class="link-text">Request Equipment</span>
+        </a>
       </li>
       <li class="nav-item" *ngIf="roleName === 'HOSPITAL'">
-        <a class="nav-link" [routerLink]="['/schedule-maintenance']">Schedule Maintenance</a>
+        <a class="nav-link animated-link" [routerLink]="['/schedule-maintenance']">
+          <span class="link-text">Schedule Maintenance</span>
+        </a>
       </li>
       <li class="nav-item" *ngIf="roleName === 'TECHNICIAN'">
-        <a class="nav-link" [routerLink]="['/maintenance']">Maintenance Report</a>
+        <a class="nav-link animated-link" [routerLink]="['/maintenance']">
+          <span class="link-text">Maintenance Report</span>
+        </a>
       </li>
       <li class="nav-item" *ngIf="roleName === 'SUPPLIER'">
-        <a class="nav-link" [routerLink]="['/orders']">Order Requests</a>
+        <a class="nav-link animated-link" [routerLink]="['/orders']">
+          <span class="link-text">Order Requests</span>
+        </a>
       </li>
       <li class="nav-item" *ngIf="!IsLoggin">
-        <a class="nav-link" [routerLink]="['/about']">About Us</a>
+        <a class="nav-link animated-link" [routerLink]="['/about']">
+          <span class="link-text">About Us</span>
+        </a>
       </li>
       <li class="nav-item" *ngIf="!IsLoggin">
-        <a class="nav-link" [routerLink]="['/contact']">Contact Us</a>
+        <a class="nav-link animated-link" [routerLink]="['/contact']">
+          <span class="link-text">Contact Us</span>
+        </a>
       </li>
     </ul>
 
     <!-- Right-aligned Nav Items -->
     <ul class="navbar-nav ms-auto">
       <li class="nav-item" *ngIf="!IsLoggin">
-        <a class="btn btn-outline-light me-2" [routerLink]="['/login']">Login</a>
+        <a class="btn btn-outline-light me-2 btn-glow" [routerLink]="['/login']">
+          <span class="btn-text">Login</span>
+        </a>
       </li>
       <li class="nav-item" *ngIf="!IsLoggin">
-        <a class="btn btn-warning text-dark" [routerLink]="['/registration']">Register</a>
+        <a class="btn btn-outline-light me-2 btn-glow" [routerLink]="['/registration']">
+          <span class="btn-text">Register</span>
+        </a>
       </li>
       <li class="nav-item" *ngIf="IsLoggin">
-        <a class="btn btn-danger ms-2" (click)="logout()" [routerLink]="['/homepage']">Logout</a>
+        <a class="btn btn-danger ms-2 btn-gradient-danger" (click)="logout()" [routerLink]="['/homepage']">
+          <span class="btn-text">Logout</span>
+        </a>
       </li>
     </ul>
   </div>
