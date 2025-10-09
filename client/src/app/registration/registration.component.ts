@@ -163,7 +163,7 @@ export class RegistrationComponent {
   showMessage: boolean = false;
   showError: boolean = false;
   responseMessage: any;
-
+// commit has madre
   constructor(public router: Router, private bookService: HttpService, private formBuilder: FormBuilder) {
  
     this.itemForm = this.formBuilder.group({
@@ -190,6 +190,7 @@ export class RegistrationComponent {
         if (response == null) {
           this.showError = false;
           this.responseMessage = "User Already Exist";
+          console.log(this.responseMessage)
         } else {
           if (this.itemForm.get('role')?.value === 'HOSPITAL') {
             this.responseMessage = 'Welcome ' + this.itemForm.get('username')?.value + ' to our page!!. You are an Admin now';
