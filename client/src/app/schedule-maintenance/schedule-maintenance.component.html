@@ -417,7 +417,7 @@
           <div class="section-divider"></div>
 
           <!-- Equipment Section -->
-          <div class="info-section-enhanced mb-4">
+          <div class="info-section-enhanced mb-4" *ngIf="m.equipment as eq; else noEquipment">
             <h6 class="section-title-enhanced">
               <div class="section-icon-wrapper equipment">
                 <i class="bi bi-tools"></i>
@@ -429,27 +429,45 @@
                 <span class="info-label-enhanced">
                   <i class="bi bi-hash"></i>ID
                 </span>
-                <span class="info-value-enhanced">{{ m.equipment.id }}</span>
+                <span class="info-value-enhanced">{{ eq?.id }}</span>
               </div>
               <div class="info-row-enhanced">
                 <span class="info-label-enhanced">
                   <i class="bi bi-tag"></i>Name
                 </span>
-                <span class="info-value-enhanced">{{ m.equipment.name }}</span>
+                <span class="info-value-enhanced">{{ eq?.name }}</span>
               </div>
               <div class="info-row-enhanced">
                 <span class="info-label-enhanced">
                   <i class="bi bi-info-circle"></i>Description
                 </span>
-                <span class="info-value-enhanced">{{ m.equipment.description }}</span>
+                <span class="info-value-enhanced">{{ eq?.description }}</span>
               </div>
             </div>
           </div>
+          <ng-template #noEquipment>
+            <div class="info-section-enhanced mb-4">
+              <h6 class="section-title-enhanced">
+                <div class="section-icon-wrapper equipment">
+                  <i class="bi bi-tools"></i>
+                </div>
+                Equipment Details
+              </h6>
+              <div class="info-content-enhanced">
+                <div class="info-row-enhanced">
+                  <span class="info-label-enhanced">
+                    <i class="bi bi-exclamation-triangle"></i>Status
+                  </span>
+                  <span class="info-value-enhanced text-muted">Equipment deleted</span>
+                </div>
+              </div>
+            </div>
+          </ng-template>
 
           <div class="section-divider"></div>
 
           <!-- Hospital Section -->
-          <div class="info-section-enhanced">
+          <div class="info-section-enhanced" *ngIf="m.equipment?.hospital as hosp; else noHospital">
             <h6 class="section-title-enhanced">
               <div class="section-icon-wrapper hospital">
                 <i class="bi bi-hospital"></i>
@@ -461,22 +479,40 @@
                 <span class="info-label-enhanced">
                   <i class="bi bi-hash"></i>ID
                 </span>
-                <span class="info-value-enhanced">{{ m.equipment.hospital.id }}</span>
+                <span class="info-value-enhanced">{{ hosp?.id }}</span>
               </div>
               <div class="info-row-enhanced">
                 <span class="info-label-enhanced">
                   <i class="bi bi-building"></i>Name
                 </span>
-                <span class="info-value-enhanced">{{ m.equipment.hospital.name }}</span>
+                <span class="info-value-enhanced">{{ hosp?.name }}</span>
               </div>
               <div class="info-row-enhanced">
                 <span class="info-label-enhanced">
                   <i class="bi bi-geo-alt"></i>Location
                 </span>
-                <span class="info-value-enhanced">{{ m.equipment.hospital.location }}</span>
+                <span class="info-value-enhanced">{{ hosp?.location }}</span>
               </div>
             </div>
           </div>
+          <ng-template #noHospital>
+            <div class="info-section-enhanced">
+              <h6 class="section-title-enhanced">
+                <div class="section-icon-wrapper hospital">
+                  <i class="bi bi-hospital"></i>
+                </div>
+                Hospital Details
+              </h6>
+              <div class="info-content-enhanced">
+                <div class="info-row-enhanced">
+                  <span class="info-label-enhanced">
+                    <i class="bi bi-exclamation-triangle"></i>Status
+                  </span>
+                  <span class="info-value-enhanced text-muted">Hospital deleted</span>
+                </div>
+              </div>
+            </div>
+          </ng-template>
         </div>
       </div>
     </div>
