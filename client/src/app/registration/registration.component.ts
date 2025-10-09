@@ -163,7 +163,7 @@ export class RegistrationComponent implements OnInit {
   showMessage: boolean = false;
   showError: boolean = false;
   responseMessage: any;
-
+// commit has madre
   constructor(public router: Router, private bookService: HttpService, private formBuilder: FormBuilder) {
     this.itemForm = this.formBuilder.group({
       username: [this.formModel.username, Validators.required],
@@ -185,6 +185,7 @@ export class RegistrationComponent implements OnInit {
         if (response == null) {
           this.showError = false;
           this.responseMessage = "User Already Exist";
+          console.log(this.responseMessage)
         } else {
           const username = this.itemForm.get('username')?.value;
           const role = this.itemForm.get('role')?.value;
