@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,160 +9,142 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 </head>
+
 <body>
 
-<!-- Animated Background -->
-<div class="animated-background">
-  <div class="gradient-orb orb-1"></div>
-  <div class="gradient-orb orb-2"></div>
-  <div class="gradient-orb orb-3"></div>
-</div>
-
-<!-- Main Content -->
-<div class="main-wrapper">
-  <!-- Header Section with Animation -->
-  <div class="header-section">
-    <div class="header-content">
-      <div class="header-icon">
-        <i class="fas fa-box-open"></i>
-      </div>
-      <h2 class="header-title">Request Equipments</h2>
-      <p class="header-subtitle">Place your equipment orders seamlessly</p>
-    </div>
+  <!-- Animated Background -->
+  <div class="animated-background">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
   </div>
 
-  <!-- Order Form Card -->
-  <div class="container">
-    <div class="glass-card form-card">
-      <div class="card-header">
-        <i class="fas fa-clipboard-check"></i>
-        <span>Order Equipments</span>
+  <!-- Main Content -->
+  <div class="main-wrapper">
+    <!-- Header Section with Animation -->
+    <div class="header-section">
+      <div class="header-content">
+        <div class="header-icon">
+          <i class="fas fa-box-open"></i>
+        </div>
+        <h2 class="header-title">Request Equipments</h2>
+        <p class="header-subtitle">Place your equipment orders seamlessly</p>
       </div>
-      <div class="card-body">
-        <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" class="order-form">
-          <div class="row gx-4">
-            <!-- Left Column -->
-            <div class="col-md-6">
-              <!-- Hospital Select -->
-              <div class="form-group floating-label-group">
-                <select 
-                  id="hospitalId" 
-                  name="hospitalId" 
-                  formControlName="hospitalId" 
-                  (change)="onHospitalSelect($event)"
-                  class="form-control floating-input"
-                  placeholder=" ">
-                  <option value="null">Please Choose</option>
-                  <option *ngFor="let hos of hospitalList" [value]="hos.id">
-                    {{ hos.name }}
-                  </option>
-                </select>
-                <label for="hospitalId" class="floating-label">
-                  <i class="fas fa-hospital"></i> Hospital
-                </label>
-                <div class="input-border"></div>
-                <div
-                  *ngIf="itemForm.controls['hospitalId'].invalid && (itemForm.controls['hospitalId'].dirty || itemForm.controls['hospitalId'].touched)"
-                  class="error-message">
-                  <i class="fas fa-exclamation-circle"></i>
-                  <span *ngIf="itemForm.controls['hospitalId'].errors">Please choose hospital.</span>
+    </div>
+
+    <!-- Order Form Card -->
+    <div class="container">
+      <div class="glass-card form-card">
+        <div class="card-header">
+          <i class="fas fa-clipboard-check"></i>
+          <span>Order Equipments</span>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" class="order-form">
+            <div class="row gx-4">
+              <!-- Left Column -->
+              <div class="col-md-6">
+                <!-- Hospital Select -->
+                <div class="form-group floating-label-group">
+                  <select id="hospitalId" name="hospitalId" formControlName="hospitalId"
+                    (change)="onHospitalSelect($event)" class="form-control floating-input" placeholder=" ">
+                    <option value="null">Please Choose</option>
+                    <option *ngFor="let hos of hospitalList" [value]="hos.id">
+                      {{ hos.name }}
+                    </option>
+                  </select>
+                  <label for="hospitalId" class="floating-label">
+                    <i class="fas fa-hospital"></i> Hospital
+                  </label>
+                  <div class="input-border"></div>
+                  <div
+                    *ngIf="itemForm.controls['hospitalId'].invalid && (itemForm.controls['hospitalId'].dirty || itemForm.controls['hospitalId'].touched)"
+                    class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span *ngIf="itemForm.controls['hospitalId'].errors">Please choose hospital.</span>
+                  </div>
+                </div>
+
+                <!-- Equipment Select -->
+                <div class="form-group floating-label-group">
+                  <select id="equipmentId" name="equipmentId" formControlName="equipmentId"
+                    class="form-control floating-input" placeholder=" ">
+                    <option value="null">Please Choose</option>
+                    <option *ngFor="let eq of equipmentList" [value]="eq.id">
+                      {{ eq.name }}
+                    </option>
+                  </select>
+                  <label for="equipmentId" class="floating-label">
+                    <i class="fas fa-tools"></i> Equipment
+                  </label>
+                  <div class="input-border"></div>
+                  <div
+                    *ngIf="itemForm.controls['equipmentId'].invalid && (itemForm.controls['equipmentId'].dirty || itemForm.controls['equipmentId'].touched)"
+                    class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span *ngIf="itemForm.controls['equipmentId'].errors">Please choose Equipment.</span>
+                  </div>
+                </div>
+
+                <!-- Order Date -->
+                <div class="form-group floating-label-group">
+                  <input type="date" id="orderDate" name="orderDate" formControlName="orderDate"
+                    class="form-control floating-input" placeholder=" " />
+                  <label for="orderDate" class="floating-label">
+                    <i class="fas fa-calendar-alt"></i> Order Date
+                  </label>
+                  <div class="input-border"></div>
+                  <div
+                    *ngIf="itemForm.controls['orderDate'].invalid && (itemForm.controls['orderDate'].dirty || itemForm.controls['orderDate'].touched)"
+                    class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span *ngIf="itemForm.controls['orderDate'].errors">Please Enter order Date.</span>
+                  </div>
                 </div>
               </div>
 
-              <!-- Equipment Select -->
-              <div class="form-group floating-label-group">
-                <select 
-                  id="equipmentId" 
-                  name="equipmentId" 
-                  formControlName="equipmentId" 
-                  class="form-control floating-input"
-                  placeholder=" ">
-                  <option value="null">Please Choose</option>
-                  <option *ngFor="let eq of equipmentList" [value]="eq.id">
-                    {{ eq.name }}
-                  </option>
-                </select>
-                <label for="equipmentId" class="floating-label">
-                  <i class="fas fa-tools"></i> Equipment
-                </label>
-                <div class="input-border"></div>
-                <div
-                  *ngIf="itemForm.controls['equipmentId'].invalid && (itemForm.controls['equipmentId'].dirty || itemForm.controls['equipmentId'].touched)"
-                  class="error-message">
-                  <i class="fas fa-exclamation-circle"></i>
-                  <span *ngIf="itemForm.controls['equipmentId'].errors">Please choose Equipment.</span>
+              <!-- Right Column -->
+              <div class="col-md-6">
+                <!-- Quantity Input -->
+                <div class="form-group floating-label-group">
+                  <input type="number" id="quantity" name="quantity" formControlName="quantity"
+                    class="form-control floating-input" placeholder=" " />
+                  <label for="quantity" class="floating-label">
+                    <i class="fas fa-boxes"></i> Quantity
+                  </label>
+                  <div class="input-border"></div>
+                  <div
+                    *ngIf="itemForm.controls['quantity'].invalid && (itemForm.controls['quantity'].dirty || itemForm.controls['quantity'].touched)"
+                    class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span *ngIf="itemForm.controls['quantity'].errors">Please Enter Quantity.</span>
+                  </div>
                 </div>
               </div>
 
-              <!-- Order Date -->
-              <div class="form-group floating-label-group">
-                <input 
-                  type="date" 
-                  id="orderDate" 
-                  name="orderDate" 
-                  formControlName="orderDate" 
-                  class="form-control floating-input"
-                  placeholder=" " />
-                <label for="orderDate" class="floating-label">
-                  <i class="fas fa-calendar-alt"></i> Order Date
-                </label>
-                <div class="input-border"></div>
-                <div
-                  *ngIf="itemForm.controls['orderDate'].invalid && (itemForm.controls['orderDate'].dirty || itemForm.controls['orderDate'].touched)"
-                  class="error-message">
-                  <i class="fas fa-exclamation-circle"></i>
-                  <span *ngIf="itemForm.controls['orderDate'].errors">Please Enter order Date.</span>
+              <!-- Action Buttons -->
+              <div class="col-12 mt-4">
+                <div class="button-group">
+                  <button class="btn-gradient btn-primary" type="submit" [disabled]="itemForm.invalid">
+                    <span class="btn-content">
+                      <i class="fas fa-paper-plane"></i>
+                      Submit Order
+                    </span>
+                    <span class="btn-shimmer"></span>
+                  </button>
+                  <button class="btn-gradient btn-secondary" type="button" (click)="showStatus()">
+                    <span class="btn-content">
+                      <i class="fas fa-list-check"></i>
+                      Show Status
+                    </span>
+                    <span class="btn-shimmer"></span>
+                  </button>
                 </div>
               </div>
-            </div>
 
-            <!-- Right Column -->
-            <div class="col-md-6">
-              <!-- Quantity Input -->
-              <div class="form-group floating-label-group">
-                <input 
-                  type="number" 
-                  id="quantity" 
-                  name="quantity" 
-                  formControlName="quantity" 
-                  class="form-control floating-input"
-                  placeholder=" " />
-                <label for="quantity" class="floating-label">
-                  <i class="fas fa-boxes"></i> Quantity
-                </label>
-                <div class="input-border"></div>
-                <div
-                  *ngIf="itemForm.controls['quantity'].invalid && (itemForm.controls['quantity'].dirty || itemForm.controls['quantity'].touched)"
-                  class="error-message">
-                  <i class="fas fa-exclamation-circle"></i>
-                  <span *ngIf="itemForm.controls['quantity'].errors">Please Enter Quantity.</span>
-                </div>
-              </div>
-            </div>
 
-            <!-- Action Buttons -->
-            <div class="col-12 mt-4">
-              <div class="button-group">
-                <button class="btn-gradient btn-primary" type="submit" [disabled]="itemForm.invalid">
-                  <span class="btn-content">
-                    <i class="fas fa-paper-plane"></i>
-                    Submit Order
-                  </span>
-                  <span class="btn-shimmer"></span>
-                </button>
-                <button class="btn-gradient btn-secondary" type="button" (click)="showStatus()">
-                  <span class="btn-content">
-                    <i class="fas fa-list-check"></i>
-                    Show Status
-                  </span>
-                  <span class="btn-shimmer"></span>
-                </button>
-              </div>
-            </div>
-
-            
-            <!-- Success Message -->
-            <!-- <div *ngIf="showMessage" class="col-6 mt-4">
+              <!-- Success Message -->
+              <!-- <div *ngIf="showMessage" class="col-6 mt-4">
               <div class="success-alert">
                 <div class="success-icon">
                   <i class="fas fa-check-circle"></i>
@@ -172,71 +155,74 @@
                 </div>
               </div>
             </div> -->
-            <div *ngIf="showMessage" class="success-message-custom">
-              <i class="bi bi-check-circle-fill me-2"></i>
-              {{ responseMessage }}
+              <div *ngIf="showMessage" class="success-message-custom">
+                <i class="bi bi-check-circle-fill me-2"></i>
+                {{ responseMessage }}
+              </div>
+
             </div>
-            
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Orders Display Section -->
-  <div class="container orders-section" *ngIf="isClick" id="div2">
-    <div class="glass-card orders-card">
-      <div class="card-header">
-        <i class="fas fa-clipboard-list"></i>
-        <span>Orders Information</span>
-      </div>
-      <div class="card-body">
-        <div class="row g-4">
-          <div class="col-md-6 col-lg-4" *ngFor="let val of orderList; let i = index">
-            <div class="order-card" [style.animation-delay]="i * 0.1 + 's'">
-              <!-- Animated Border -->
-              <div class="order-card-border"></div>
-              
-              <!-- Order Header -->
-              <div class="order-card-header">
-                <div class="order-id">
-                  <div class="order-icon">
-                    <i class="fas fa-receipt"></i>
-                  </div>
-                  <span>Order #{{ val.id }}</span>
-                </div>
-                <div class="order-status" [ngStyle]="getStatusStyle(val.status)">
-                  <span class="status-dot"></span>
-                  {{ val.status }}
-                </div>
-              </div>
-              
-              <!-- Order Body -->
-              <div class="order-card-body">
-                <!-- Info Section -->
-                <div class="info-section">
-                  <div class="info-item">
-                    <div class="info-icon">
-                      <i class="fas fa-calendar-alt"></i>
-                    </div>
-                    <div class="info-content">
-                      <span class="info-label">Order Date</span>
-                      <span class="info-value">{{ val.orderDate | date : "dd-MMM-yyyy" }}</span>
-                    </div>
-                  </div>
+    <!-- Orders Display Section -->
+    <div class="container orders-section" *ngIf="isClick" id="div2">
+      <div class="glass-card orders-card">
+        <div class="card-header">
+          <i class="fas fa-clipboard-list"></i>
+          <span>Orders Information</span>
+        </div>
+        <div class="card-body">
+          <div class="row g-4">
+            <!-- *ngFor changed for pagination -->
+            <!-- <div class="col-md-6 col-lg-4" *ngFor="let val of orderList; let i = index"> -->
+            <div class="col-md-6 col-lg-4" *ngFor="let val of paginatedOrders; let i = index">
 
-                  <div class="info-item">
-                    <div class="info-icon">
-                      <i class="fas fa-boxes"></i>
+              <div class="order-card" [style.animation-delay]="i * 0.1 + 's'">
+                <!-- Animated Border -->
+                <div class="order-card-border"></div>
+
+                <!-- Order Header -->
+                <div class="order-card-header">
+                  <div class="order-id">
+                    <div class="order-icon">
+                      <i class="fas fa-receipt"></i>
                     </div>
-                    <div class="info-content">
-                      <span class="info-label">Quantity</span>
-                      <span class="info-value">{{ val.quantity }}</span>
-                    </div>
+                    <span>Order #{{ val.id }}</span>
+                  </div>
+                  <div class="order-status" [ngStyle]="getStatusStyle(val.status)">
+                    <span class="status-dot"></span>
+                    {{ val.status }}
                   </div>
                 </div>
 
-                <div class="divider"></div>
+                <!-- Order Body -->
+                <div class="order-card-body">
+                  <!-- Info Section -->
+                  <div class="info-section">
+                    <div class="info-item">
+                      <div class="info-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                      </div>
+                      <div class="info-content">
+                        <span class="info-label">Order Date</span>
+                        <span class="info-value">{{ val.orderDate | date : "dd-MMM-yyyy" }}</span>
+                      </div>
+                    </div>
+
+                    <div class="info-item">
+                      <div class="info-icon">
+                        <i class="fas fa-boxes"></i>
+                      </div>
+                      <div class="info-content">
+                        <span class="info-label">Quantity</span>
+                        <span class="info-value">{{ val.quantity }}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="divider"></div>
 
                 <!-- Details Section -->
                 <div class="details-section">
@@ -280,14 +266,35 @@
                     </div>
                   </div>
                 </div>
+
               </div>
+
             </div>
+            <!-- --- Added pagination controls --- -->
+            <div class="pagination-container text-center mt-4">
+              <button class="btn btn-outline-primary me-2" (click)="previousPage()" [disabled]="currentPage === 1">
+                Previous
+              </button>
+
+              <ng-container *ngFor="let page of [].constructor(totalPages()); let i = index">
+                <button class="btn btn-outline-secondary me-1" [class.active]="currentPage === i + 1"
+                  (click)="goToPage(i + 1)">
+                  {{ i + 1 }}
+                </button>
+              </ng-container>
+
+              <button class="btn btn-outline-primary ms-2" (click)="nextPage()"
+                [disabled]="currentPage === totalPages()">
+                Next
+              </button>
+            </div>
+            <!-- --- Pagination controls end --- -->
+
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 </body>
 </html>

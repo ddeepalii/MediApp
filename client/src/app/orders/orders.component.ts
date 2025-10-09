@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
 import { AuthService } from '../../services/auth.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-orders',
@@ -19,7 +20,8 @@ export class OrdersComponent implements OnInit {
   constructor(
     public router: Router,
     public httpService: HttpService,
-    public authService: AuthService
+    public authService: AuthService,
+    private cd: ChangeDetectorRef
   ) {
     if (
       this.authService.getRole !== 'HOSPITAL' &&
@@ -29,24 +31,78 @@ export class OrdersComponent implements OnInit {
     }
   }
 
+  // ================= Pagination Variables =================
+  currentPage: number = 1;      // Current active page
+  pageSize: number = 6;         // Orders per page
+  totalPages: number = 1;       // Total pages
+  paginatedOrders: any[] = [];  // Orders for the current page
+
+  // ================= Pagination Helper =================
+  setPaginatedOrders(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedOrders = this.orderList.slice(startIndex, endIndex);
+  }
+
+  // ================= Pagination Button Methods =================
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.setPaginatedOrders();
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.setPaginatedOrders();
+    }
+  }
+
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.setPaginatedOrders();
+    }
+  }
+  // Returns an array [1, 2, 3, ..., totalPages] for ngFor
+get pages(): number[] {
+  return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+}
+
+
+
   ngOnInit(): void {
     this.getOrders();
   }
 
   // 🔄 Fetch orders
+  // getOrders(): void {
+  //   this.orderList = [];
+  //   this.httpService.getorders().subscribe(
+  //     (data: any) => {
+  //       this.orderList = data;
+  //     },
+  //     (error) => {
+  //       this.showError = true;
+  //       this.errorMessage =
+  //         'An error occurred while fetching orders. Please try again later.';
+  //     }
+  //   );
+  // }
+
   getOrders(): void {
-    this.orderList = [];
     this.httpService.getorders().subscribe(
       (data: any) => {
         this.orderList = data;
-      },
-      (error) => {
-        this.showError = true;
-        this.errorMessage =
-          'An error occurred while fetching orders. Please try again later.';
+        this.totalPages = Math.ceil(this.orderList.length / this.pageSize);
+        this.currentPage = 1;
+        this.setPaginatedOrders();
+        this.cd.detectChanges(); // force update
       }
     );
   }
+
 
   // // Prepare order for update
   // edit(order: any): void {
@@ -56,7 +112,7 @@ export class OrdersComponent implements OnInit {
   //   this.showError = false;
   // }
 
- //update
+  //update
   // update(): void {
   //   if (this.statusModel.newStatus != null) {
   //     this.httpService
@@ -85,7 +141,7 @@ export class OrdersComponent implements OnInit {
     if (targetOrder) {
       targetOrder.status = newStatus;
     }
-  
+
     // ✅ Proceed with backend update
     this.httpService.UpdateOrderStatus(newStatus, orderId).subscribe(
       (data: any) => {
@@ -99,8 +155,8 @@ export class OrdersComponent implements OnInit {
       }
     );
   }
-  
-  
+
+
 
   // 🗑️ Delete an order
   delete(orderId: number): void {

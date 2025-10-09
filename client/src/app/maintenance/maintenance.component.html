@@ -95,7 +95,7 @@
 
 <!-- Main Container with Wrapper -->
 <div class="maintenance-wrapper">
-  
+
   <!-- Animated Header Section -->
   <div class="text-center header-section">
     <h2 class="section-heading">
@@ -117,10 +117,9 @@
   <!-- Maintenance Cards Grid -->
   <div class="container cards-container">
     <div class="row">
-      <div class="col-md-6 col-lg-4 mb-4 card-item" 
-           *ngFor="let maintenance of maintenanceList; let i = index"
-           [style.animation-delay]="(i * 0.1) + 's'">
-        
+      <div class="col-md-6 col-lg-4 mb-4 card-item" *ngFor="let maintenance of paginatedMaintenance; let i = index"
+        [style.animation-delay]="(i * 0.1) + 's'">
+
         <div class="maintenance-card">
           <!-- Card Header with Gradient -->
           <div class="card-header-custom">
@@ -211,16 +210,12 @@
 
             <!-- Action Buttons -->
             <div class="action-buttons">
-              <button class="btn-action btn-edit" 
-                      data-bs-toggle="modal" 
-                      data-bs-target="#editModal"
-                      (click)="edit(maintenance)" 
-                      [disabled]="maintenance.status === 'Serviced'">
+              <button class="btn-action btn-edit" data-bs-toggle="modal" data-bs-target="#editModal"
+                (click)="edit(maintenance)" [disabled]="maintenance.status === 'Serviced'">
                 <i class="fas fa-edit"></i>
                 <span>Edit</span>
               </button>
-              <button class="btn-action btn-delete" 
-                      (click)="delete(maintenance)">
+              <button class="btn-action btn-delete" (click)="delete(maintenance)">
                 <i class="fas fa-trash-alt"></i>
                 <span>Delete</span>
               </button>
@@ -230,83 +225,91 @@
       </div>
     </div>
   </div>
-</div>
+  <div class="pagination-wrapper" *ngIf="totalPages > 1">
+    <button class="pagination-btn" (click)="prevPage()" [disabled]="currentPage === 1">
+      &laquo; Prev
+    </button>
 
-<!-- Enhanced Edit Modal -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content modal-custom">
-      <form [formGroup]="itemForm" (ngSubmit)="update()">
-        
-        <!-- Modal Header -->
-        <div class="modal-header-custom">
-          <h5 class="modal-title-custom">
-            <i class="fas fa-edit"></i>
-            Edit Maintenance Record
-          </h5>
-          <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close" #closeBtn>
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
+    <button class="pagination-btn" *ngFor="let page of [].constructor(totalPages); let i = index"
+      (click)="goToPage(i + 1)" [class.active]="currentPage === i + 1">
+      {{ i + 1 }}
+    </button>
 
-        <!-- Modal Body -->
-        <div class="modal-body-custom">
-          <div class="form-group-custom">
-            <label class="form-label-custom">
-              <i class="fas fa-calendar-alt"></i>
-              Scheduled Date
-            </label>
-            <input type="date" 
-                   class="form-control-custom" 
-                   formControlName="scheduledDate" />
+    <button class="pagination-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">
+      Next &raquo;
+    </button>
+  </div>
+
+
+  <!-- Enhanced Edit Modal -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-custom">
+        <form [formGroup]="itemForm" (ngSubmit)="update()">
+
+          <!-- Modal Header -->
+          <div class="modal-header-custom">
+            <h5 class="modal-title-custom">
+              <i class="fas fa-edit"></i>
+              Edit Maintenance Record
+            </h5>
+            <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close" #closeBtn>
+              <i class="fas fa-times"></i>
+            </button>
           </div>
 
-          <div class="form-group-custom">
-            <label class="form-label-custom">
-              <i class="fas fa-calendar-check"></i>
-              Completed Date
-            </label>
-            <input type="date" 
-                   class="form-control-custom" 
-                   formControlName="completedDate" />
+          <!-- Modal Body -->
+          <div class="modal-body-custom">
+            <div class="form-group-custom">
+              <label class="form-label-custom">
+                <i class="fas fa-calendar-alt"></i>
+                Scheduled Date
+              </label>
+              <input type="date" class="form-control-custom" formControlName="scheduledDate" />
+            </div>
+
+            <div class="form-group-custom">
+              <label class="form-label-custom">
+                <i class="fas fa-calendar-check"></i>
+                Completed Date
+              </label>
+              <input type="date" class="form-control-custom" formControlName="completedDate" />
+            </div>
+
+            <div class="form-group-custom">
+              <label class="form-label-custom">
+                <i class="fas fa-align-left"></i>
+                Description
+              </label>
+              <textarea class="form-control-custom textarea-custom" rows="3" formControlName="description"
+                placeholder="Enter maintenance description..."></textarea>
+            </div>
+
+            <div class="form-group-custom">
+              <label class="form-label-custom">
+                <i class="fas fa-info-circle"></i>
+                Status
+              </label>
+              <select class="form-control-custom select-custom" formControlName="status">
+                <option value="Scheduled">Scheduled</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Serviced">Serviced</option>
+              </select>
+            </div>
           </div>
 
-          <div class="form-group-custom">
-            <label class="form-label-custom">
-              <i class="fas fa-align-left"></i>
-              Description
-            </label>
-            <textarea class="form-control-custom textarea-custom" 
-                      rows="3" 
-                      formControlName="description"
-                      placeholder="Enter maintenance description..."></textarea>
+          <!-- Modal Footer -->
+          <div class="modal-footer-custom">
+            <button type="button" class="btn-modal btn-cancel" data-bs-dismiss="modal">
+              <i class="fas fa-times"></i>
+              Cancel
+            </button>
+            <button type="submit" class="btn-modal btn-update">
+              <i class="fas fa-save"></i>
+              Update Record
+            </button>
           </div>
-
-          <div class="form-group-custom">
-            <label class="form-label-custom">
-              <i class="fas fa-info-circle"></i>
-              Status
-            </label>
-            <select class="form-control-custom select-custom" formControlName="status">
-              <option value="Scheduled">Scheduled</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Serviced">Serviced</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Modal Footer -->
-        <div class="modal-footer-custom">
-          <button type="button" class="btn-modal btn-cancel" data-bs-dismiss="modal">
-            <i class="fas fa-times"></i>
-            Cancel
-          </button>
-          <button type="submit" class="btn-modal btn-update">
-            <i class="fas fa-save"></i>
-            Update Record
-          </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
-</div>

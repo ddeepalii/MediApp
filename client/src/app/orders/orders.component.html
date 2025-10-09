@@ -54,14 +54,11 @@
 </div>
 </div> -->
 
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
 <div class="order-wrapper">
   <div class="background-pattern"></div>
-  
+
   <div class="container mt-4">
     <div class="row">
       <div class="col-12">
@@ -72,10 +69,9 @@
         </h2>
       </div>
 
-      <div *ngFor="let val of orderList; let i = index" 
-           class="col-md-6 col-lg-4 mb-4 order-card-wrapper"
-           [style.animation-delay]="i * 0.1 + 's'">
-        
+      <div *ngFor="let val of paginatedOrders; let i = index" class="col-md-6 col-lg-4 mb-4 order-card-wrapper"
+        [style.animation-delay]="i * 0.1 + 's'">
+
         <div class="card order-card">
           <div class="card-header">
             <div class="order-number">
@@ -136,22 +132,19 @@
             </div>
 
             <div class="action-buttons">
-              <button class="btn btn-transit" 
-                      (click)="updateOrderStatus('In Transit', val.id)"
-                      [disabled]="val.status === 'Delivered'">
-                      <i class="fas fa-shipping-fast"></i>
+              <button class="btn btn-transit" (click)="updateOrderStatus('In Transit', val.id)"
+                [disabled]="val.status === 'Delivered'">
+                <i class="fas fa-shipping-fast"></i>
               </button>
 
-              <button class="btn btn-delivered" 
-                      (click)="updateOrderStatus('Delivered', val.id)"
-                      [disabled]="val.status === 'Delivered'">
-               <i class="fas fa-check-circle"></i>
+              <button class="btn btn-delivered" (click)="updateOrderStatus('Delivered', val.id)"
+                [disabled]="val.status === 'Delivered'">
+                <i class="fas fa-check-circle"></i>
                 <!-- <span>Delivered</span> -->
               </button>
 
-              <button class="btn btn-delete" 
-                      (click)="delete(val.id)">
-                      <i class="fas fa-trash"></i>
+              <button class="btn btn-delete" (click)="delete(val.id)">
+                <i class="fas fa-trash"></i>
                 <!-- <span>Delete</span> -->
               </button>
             </div>
@@ -161,5 +154,23 @@
         </div>
       </div>
     </div>
+    <!-- Pagination Controls -->
+    <div class="pagination-wrapper mt-3" *ngIf="totalPages > 1">
+        <button class="pagination-btn" (click)="prevPage()" [disabled]="currentPage === 1">
+          &laquo; Prev
+        </button>
+      
+        <button class="pagination-btn" *ngFor="let page of pages"
+                (click)="goToPage(page)" [class.active]="currentPage === page">
+          {{ page }}
+        </button>
+      
+        <button class="pagination-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">
+          Next &raquo;
+        </button>
+      </div>
+      
+    
+
   </div>
 </div>
