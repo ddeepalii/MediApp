@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -223,28 +224,45 @@
 
                   <div class="divider"></div>
 
-                  <!-- Details Section -->
-                  <div class="details-section">
+                <!-- Details Section -->
+                <div class="details-section">
+                  <div class="detail-block equipment-block" *ngIf="val.equipment as eq; else noEq">
+                    <h6 class="detail-title">
+                      <i class="fas fa-tools"></i> Equipment
+                    </h6>
+                    <div class="detail-content">
+                      <p><strong>ID:</strong> {{ eq?.id }}</p>
+                      <p><strong>Name:</strong> {{ eq?.name }}</p>
+                      <p><strong>Description:</strong> {{ eq?.description }}</p>
+                    </div>
+                  </div>
+                  <ng-template #noEq>
                     <div class="detail-block equipment-block">
                       <h6 class="detail-title">
                         <i class="fas fa-tools"></i> Equipment
                       </h6>
                       <div class="detail-content">
-                        <p><strong>ID:</strong> {{ val.equipment.id }}</p>
-                        <p><strong>Name:</strong> {{ val.equipment.name }}</p>
-                        <p><strong>Description:</strong> {{ val.equipment.description }}</p>
+                        <p class="text-muted">Equipment deleted</p>
                       </div>
                     </div>
+                  </ng-template>
 
-                    <div class="detail-block hospital-block">
-                      <h6 class="detail-title">
-                        <i class="fas fa-hospital"></i> Hospital
-                      </h6>
-                      <div class="detail-content">
-                        <p><strong>ID:</strong> {{ val.equipment.hospital.id }}</p>
-                        <p><strong>Name:</strong> {{ val.equipment.hospital.name }}</p>
-                        <p><strong>Location:</strong> {{ val.equipment.hospital.location }}</p>
-                      </div>
+                  <div class="detail-block hospital-block" *ngIf="val.equipment?.hospital as hosp">
+                    <h6 class="detail-title">
+                      <i class="fas fa-hospital"></i> Hospital
+                    </h6>
+                    <div class="detail-content">
+                      <p><strong>ID:</strong> {{ hosp?.id }}</p>
+                      <p><strong>Name:</strong> {{ hosp?.name }}</p>
+                      <p><strong>Location:</strong> {{ hosp?.location }}</p>
+                    </div>
+                  </div>
+                  <div class="detail-block hospital-block" *ngIf="!val.equipment?.hospital">
+                    <h6 class="detail-title">
+                      <i class="fas fa-hospital"></i> Hospital
+                    </h6>
+                    <div class="detail-content">
+                      <p class="text-muted">Hospital deleted</p>
                     </div>
                   </div>
                 </div>
@@ -279,5 +297,4 @@
   </div>
 
 </body>
-
 </html>
